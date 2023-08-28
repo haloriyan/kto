@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<h2 class="mt-4">Riwayat Kunjungan Booth</h2>
+<h2 class="mt-4">Riwayat Kunjungan Exhibitor</h2>
 <div class="bg-white rounded-more p-4 border">
     @if ($visitor->visits->count() == 0)
         <div>Tidak ada data</div>

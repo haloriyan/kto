@@ -67,8 +67,13 @@
         <i class="bx bx-chevron-right"></i>
     </a>
     <a href="{{ route('admin.appointment') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.appointment' ? 'active' : 'black' }}">
-        <i class="bx bx-group"></i>
+        <i class="bx bx-timer"></i>
         <div class="flex grow-1">Appointment</div>
+        <i class="bx bx-chevron-right"></i>
+    </a>
+    <a href="{{ route('admin.claim') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.claim' ? 'active' : 'black' }}">
+        <i class="bx bx-gift"></i>
+        <div class="flex grow-1">Klaim Hadiah</div>
         <i class="bx bx-chevron-right"></i>
     </a>
 

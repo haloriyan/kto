@@ -12,6 +12,7 @@ class VisitorController extends Controller
 {
     public static function register($props) {
         $token = Str::random(32);
+        
         $saveData = Visitor::create([
             'name' => $props['name'],
             'email' => $props['email'],

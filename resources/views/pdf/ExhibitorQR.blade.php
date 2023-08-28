@@ -8,7 +8,7 @@
         <img 
             src="{{ public_path() }}/storage/exhibitor_icons/{{ $exhibitor->icon }}" 
             alt="tes"
-            style="width: 200px;height: 200px;border-radius: 999px;border: 12px solid #fff;margin-top: -100px;object-fit: cover;"
+            style="width: 200px;height: 200px;border-radius: 999px;border: 12px solid #fff;margin-top: -100px;object-fit: cover;background: #fff;"
         >
         <h2 style="font-size: 32px;">{{ $exhibitor->name }}</h2>
         <img

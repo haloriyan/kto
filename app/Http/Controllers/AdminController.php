@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Claim;
 use App\Models\Exhibitor;
 use App\Models\Schedule;
 use App\Models\Visitor;
@@ -90,6 +91,7 @@ class AdminController extends Controller
             array_push($filter, ['name', 'LIKE', '%'.$request->q.'%']);
         }
         $visitors = Visitor::where($filter)->orderBy('created_at', 'DESC')->paginate(25);
+        $visitors->appends($request->query());
 
         return view('admin.visitor', [
             'myData' => $myData,
@@ -130,6 +132,7 @@ class AdminController extends Controller
         $visits = $query
         ->with(['exhibitor', 'visitor'])
         ->paginate(25);
+        $visits->appends($request->query());
 
         return view('admin.visitting', [
             'myData' => $myData,
@@ -162,6 +165,7 @@ class AdminController extends Controller
             });
         }
         $appointments = $query->with(['schedule', 'exhibitor', 'visitor'])->paginate(25);
+        $appointments->appends($request->query());
         $total_data = Appointment::orderBy('created_at', 'DESC')->get('id');
 
         return view('admin.appointment', [
@@ -170,6 +174,37 @@ class AdminController extends Controller
             'appointments' => $appointments,
             'request' => $request,
             'total_data' => $total_data,
+        ]);
+    }
+    public function claim(Request $request) {
+        $myData = self::me();
+        $message = Session::get('message');
+        $query = Claim::orderBy('created_at', 'DESC');
+        if ($request->q != "") {
+            $query = $query->whereHas('visitor', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+        $claims = $query->with('visitor.visits.exhibitor')->paginate(25);
+        $claims->appends($request->query());
+
+        return view('admin.claim', [
+            'myData' => $myData,
+            'message' => $message,
+            'request' => $request,
+            'claims' => $claims,
+        ]);
+    }
+    public function acceptClaim($id) {
+        $data = Claim::where('id', $id);
+        $claim = $data->with('visitor')->first();
+
+        $data->update([
+            'is_accepted' => true,
+        ]);
+
+        return redirect()->route('admin.claim')->with([
+            'message' => "Klaim hadiah berhasil disetujui"
         ]);
     }
 }

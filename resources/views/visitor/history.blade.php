@@ -32,30 +32,61 @@
     </div>
 
     <div class="h-50"></div>
-
-    <a href="{{ route('visitor.makeAppointment') }}" class="bg-primary rounded p-2 flex row item-center gap-20 mb-2">
-        <div class="h-40 ratio-1-1 rounded-max flex centerize bg-white">
-            <i class="bx bx-plus text primary"></i>
-        </div>
-        <div class="flex column grow-1">
-            <div class="text bold size-18">Buat Appointment</div>
-            <div class="text size-12">dengan exhibitor</div>
-        </div>
-    </a>
-
-    @foreach ($histories as $item)
-        <div class="flex row bg-white border bottom-6 blue transparent pt-2 pb-2 gap-20">
-            <img 
-                class="h-60 ratio-1-1 rounded bg-grey"
-                src="{{ asset('storage/exhibitor_icons/' . $item->exhibitor->icon) }}" 
-                alt="{{ $item->exhibitor->name }}"
-            >
-            <div class="flex column grow-1">
-                <div class="text size-18 bold">{{ $item->exhibitor->name }}</div>
-                <div class="text small muted mt-05">Berkunjung pada {{ Carbon::parse($item->created_at)->format('d M, H:i') }}</div>
+    
+    @if ($errors->count() > 0)
+        @foreach ($errors->all() as $err)
+            <div class="bg-red rounded p-2 mb-2">
+                {{ $err }}
             </div>
+        @endforeach
+    @endif
+
+    @if ($message != "")
+        <div class="bg-green rounded p-2 mb-2">
+            {{ $message }}
         </div>
-    @endforeach
+    @endif
+
+    @if ($myData->appointment_eligible)
+        <a href="{{ route('visitor.makeAppointment') }}" class="bg-primary rounded p-2 flex row item-center gap-20 mb-2">
+            <div class="h-40 ratio-1-1 rounded-max flex centerize bg-white">
+                <i class="bx bx-plus text primary"></i>
+            </div>
+            <div class="flex column grow-1">
+                <div class="text bold size-18">Buat Appointment</div>
+                <div class="text size-12">dengan exhibitor</div>
+            </div>
+        </a>
+    @endif
+
+    @if ($histories->count() == 0)
+        <h3 class="mt-4 mb-0">Tidak ada data</h3>
+        <div class="mt-05 text muted">
+            Gunakan kamera ponselmu untuk scan di booth sebanyak 5 kali dan dapatkan merchandise menarik
+        </div>
+    @else
+        @foreach ($histories as $item)
+            <div class="flex row bg-white border bottom-6 blue transparent pt-2 pb-2 gap-20">
+                <img 
+                    class="h-60 ratio-1-1 rounded bg-grey"
+                    src="{{ asset('storage/exhibitor_icons/' . $item->exhibitor->icon) }}" 
+                    alt="{{ $item->exhibitor->name }}"
+                >
+                <div class="flex column grow-1">
+                    <div class="text size-18 bold">{{ $item->exhibitor->name }}</div>
+                    <div class="text small muted mt-05">Berkunjung pada {{ Carbon::parse($item->created_at)->format('d M, H:i') }}</div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+
+    @if ($histories->count() >= env('MIN_TO_CLAIM'))
+        @if (!$myData->claim()->exists())
+            <a href="{{ route('visitor.claim') }}">
+                <button class="primary mt-3 w-100">Klaim Hadiah</button>
+            </a>
+        @endif
+    @endif
 </div>
 
 </body>

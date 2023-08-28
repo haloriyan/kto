@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Claim;
 use App\Models\Exhibitor;
 use Session;
 use App\Models\Visitor;
@@ -113,6 +114,7 @@ class VisitorController extends Controller
     }
     public function history() {
         $myData = self::me();
+        $message = Session::get('message');
 
         $histories = VisitorScan::where('visitor_id', $myData->id)
         ->with('exhibitor')
@@ -121,6 +123,7 @@ class VisitorController extends Controller
         return view('visitor.history', [
             'histories' => $histories,
             'myData' => $myData,
+            'message' => $message,
         ]);
     }
     public function makeAppointment(Request $request) {
@@ -161,6 +164,26 @@ class VisitorController extends Controller
             'exhibitors' => $exhibitors,
             'exhibitor' => $exhibitor,
             'request' => $request,
+        ]);
+    }
+
+    public function claim(Request $request) {
+        $myData = self::me();
+        $visits = VisitorScan::where('visitor_id', $myData->id)->get();
+
+        if ($visits->count() >= env('MIN_TO_CLAIM')) {
+            $claim = Claim::create([
+                'visitor_id' => $myData->id,
+                'is_accepted' => false,
+            ]);
+        } else {
+            return redirect()->route('visitor.home')->withErrors([
+                'Anda belum bisa mengklaim hadiah'
+            ]);
+        }
+
+        return redirect()->route('visitor.home')->with([
+            'message' => "Berhasil mengajukan klaim hadiah. Silahkan ke booth penyelenggara untuk mengambil hadiah Anda"
         ]);
     }
 }

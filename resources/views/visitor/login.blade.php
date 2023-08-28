@@ -82,7 +82,6 @@
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
             window.localStorage.setItem('visitor_token', res.visitor.token);
             window.location.href = `{{ route('visitor.authorize') }}/${res.visitor.token}/${redirectTo}`;
         })

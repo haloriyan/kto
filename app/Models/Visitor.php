@@ -11,10 +11,14 @@ class Visitor extends Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'password', 'is_active', 'appointment_eligible'
+        'name', 'email', 'password', 'is_active', 'appointment_eligible', 'token'
     ];
 
     public function visits() {
         return $this->hasMany(VisitorScan::class, 'visitor_id');
+    }
+
+    public function claim() {
+        return $this->hasOne(Claim::class, 'visitor_id');
     }
 }

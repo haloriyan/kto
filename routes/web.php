@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return bcrypt("inikatasandi");
+    return redirect()->route('visitor.loginPage');
 });
 
 Route::get('auth/{token?}/{redirectTo?}', "VisitorController@auth")->name('visitor.authorize');
@@ -14,7 +14,8 @@ Route::post('register', "VisitorController@register")->name('visitor.register');
 Route::get('logout', "VisitorController@logout")->name('visitor.logout');
 
 Route::group(['middleware' => "Visitor"], function () {
-    Route::get('home', "VisitorController@home")->name('visitor.home');
+    Route::get('home', "VisitorController@history")->name('visitor.home');
+    Route::get('claim', "VisitorController@claim")->name('visitor.claim');
 });
 
 Route::group(['prefix' => "admin"], function () {
@@ -44,6 +45,11 @@ Route::group(['prefix' => "admin"], function () {
             Route::post('delete', "ScheduleController@delete")->name('schedule.delete');
             Route::post('edit', "ScheduleController@edit")->name('schedule.edit');
             Route::get('/', "AdminController@schedule")->name('admin.schedule');
+        });
+
+        Route::group(['prefix' => "claim"], function () {
+            Route::get('/', "AdminController@claim")->name('admin.claim');
+            Route::get('/{id}/accept', "AdminController@acceptClaim")->name('admin.claim.accept');
         });
     });
 });
