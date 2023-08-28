@@ -31,13 +31,17 @@
             <tr>
                 <th>Nama</th>
                 <th>Email</th>
-                <th></th>
+                <th>Terdaftar Pada</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($visitors as $visitor)
                 <tr>
-                    <td>{{ $visitor->name }}</td>
+                    <td>
+                        <a href="{{ route('admin.visitor.detail', $visitor->id) }}" class="text underline primary">
+                            {{ $visitor->name }}
+                        </a>
+                    </td>
                     <td>{{ $visitor->email }}</td>
                     <td>{{ Carbon::parse($visitor->created_at)->format('d M, H:i') }}</td>
                 </tr>

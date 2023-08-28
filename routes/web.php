@@ -25,9 +25,13 @@ Route::group(['prefix' => "admin"], function () {
     Route::group(['middleware' => "Admin"], function () {
         Route::get('dashboard', "AdminController@dashboard")->name('admin.dashboard');
         Route::get('exhibitor', "AdminController@exhibitor")->name('admin.exhibitor');
-        Route::get('visitor', "AdminController@visitor")->name('admin.visitor');
         Route::get('visitting', "AdminController@visitting")->name('admin.visitting');
         Route::get('appointment', 'AdminController@appointment')->name('admin.appointment');
+
+        Route::group(['prefix' => "visitor"], function () {
+            Route::get('/', "AdminController@visitor")->name('admin.visitor');
+            Route::get('/{id}/detail', "AdminController@visitorDetail")->name('admin.visitor.detail');
+        });
 
         Route::group(['prefix' => "exhibitor"], function () {
             Route::post('store', "ExhibitorController@store")->name('exhibitor.store');

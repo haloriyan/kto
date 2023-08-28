@@ -4,6 +4,7 @@
 
 @php
     use Carbon\Carbon;
+    Carbon::setLocale('id-ID');
 @endphp
 
 @section('head')
@@ -44,8 +45,8 @@
             <tbody>
                 @foreach ($schedules as $item)
                     <tr>
-                        <td>{{ Carbon::parse($item->date)->format('d M') }}</td>
-                        <td>{{ Carbon::parse($item->date)->format('H:i') }}</td>
+                        <td>{{ Carbon::parse($item->date)->isoFormat('D MMMM') }}</td>
+                        <td>{{ Carbon::parse($item->date)->isoFormat('HH:mm') }}</td>
                         <td>
                             <button onclick="edit('{{ $item }}')" class="blue small">Edit</button>
                             <button onclick="del('{{ $item }}')" class="red small">Hapus</button>

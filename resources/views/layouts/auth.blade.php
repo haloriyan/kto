@@ -16,12 +16,16 @@
 <body>
     
 <div class="absolute top-0 left-0 right-0 bottom-0 flex row centerize">
-    <div class="w-60 bg-red IllustrationContainer" style="height: 100%">sd</div>
+    <img 
+        src="{{ asset('images/GATE_2.jpg') }}"
+        class="w-60 bg-red IllustrationContainer cover" style="height: 100%" 
+    />
     <div class="flex column grow-1 FormContainer">
         <div class="flex centerize mb-4">
-            <div class="w-50 bg-grey ratio-5-2 rounded flex centerize">
-                LOGO
-            </div>
+            <img 
+                src="{{ asset('images/logo.png') }}" alt="Logo KMTF"
+                class="w-50 ratio-5-2 rounded flex centerize"
+            >
         </div>
         @yield('content')
         <div class="h-40"></div>

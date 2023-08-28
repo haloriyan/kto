@@ -98,6 +98,23 @@ class AdminController extends Controller
             'total_visitor' => $totalVisitors,
         ]);
     }
+    public function visitorDetail($id, Request $request) {
+        $myData = self::me();
+        $visitor = Visitor::where('id', $id)
+        ->with('visits.exhibitor')
+        ->first();
+        
+        $names = explode(" ", $visitor->name);
+        $visitor->initial = $names[0][0];
+        if (count($names) > 1) {
+            $visitor->initial .= $names[count($names) - 1][0];
+        }
+
+        return view('admin.VisitorDetail', [
+            'myData' => $myData,
+            'visitor' => $visitor,
+        ]);
+    }
     public function visitting(Request $request) {
         $myData = self::me();
 

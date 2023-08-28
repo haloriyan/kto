@@ -92,8 +92,7 @@
 
     const Authorize = () => {
         let token = window.localStorage.getItem('visitor_token');
-        console.log(token);
-        if (token !== null || token !== undefined) {
+        if (token !== null) {
             window.location.href = `{{ route('visitor.authorize') }}/${token}/${redirectTo}`;
         }
     }

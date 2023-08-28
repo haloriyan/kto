@@ -13,4 +13,8 @@ class Visitor extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'is_active', 'appointment_eligible'
     ];
+
+    public function visits() {
+        return $this->hasMany(VisitorScan::class, 'visitor_id');
+    }
 }
