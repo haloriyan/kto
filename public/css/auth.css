@@ -1,0 +1,11 @@
+.FormContainer {
+    padding: 40px;
+}
+@media (max-width: 480px) {
+    .IllustrationContainer {
+        display: none;
+    }
+    .FormContainer {
+        padding: 20px;
+    }
+}

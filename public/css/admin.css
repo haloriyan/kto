@@ -1,0 +1,24 @@
+body {
+    background-color: #f8f7f7;
+}
+.MenuItem.active {
+    background-color: #eee;
+    color: var(--primary);
+}
+.LeftMenu {
+    left: -50%;
+    transition: 0.4s;
+}
+.LeftMenu.active {
+    left: 0px;
+}
+.content {
+    top: 60px;
+    padding: 40px;
+}
+
+@media (max-width: 480px) {
+    .LeftMenu {
+        width: 100%;
+    }
+}
