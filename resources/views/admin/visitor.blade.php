@@ -32,6 +32,7 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Terdaftar Pada</th>
+                <th>Appointment Eligible</th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +45,11 @@
                     </td>
                     <td>{{ $visitor->email }}</td>
                     <td>{{ Carbon::parse($visitor->created_at)->format('d M, H:i') }}</td>
+                    <td>
+                        <a href="{{ route('admin.visitor.eligible', $visitor->id) }}" class="switch {{ $visitor->appointment_eligible ? 'on' : '' }}">
+                            <div></div>
+                        </a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

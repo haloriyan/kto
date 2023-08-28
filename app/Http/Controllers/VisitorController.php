@@ -186,4 +186,15 @@ class VisitorController extends Controller
             'message' => "Berhasil mengajukan klaim hadiah. Silahkan ke booth penyelenggara untuk mengambil hadiah Anda"
         ]);
     }
+
+    public function appointmentEligible($id) {
+        $data = Visitor::where('id', $id);
+        $visitor = $data->first();
+
+        $data->update([
+            'appointment_eligible' => !$visitor->appointment_eligible
+        ]);
+
+        return redirect()->back();
+    }
 }
