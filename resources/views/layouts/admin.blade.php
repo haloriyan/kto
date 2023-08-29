@@ -58,6 +58,16 @@
         <div class="flex grow-1">Jadwal Appointment</div>
         <i class="bx bx-chevron-right"></i>
     </a>
+    <a href="{{ route('admin.admin') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.admin' ? 'active' : 'black' }}">
+        <i class="bx bx-group"></i>
+        <div class="flex grow-1">Administrator</div>
+        <i class="bx bx-chevron-right"></i>
+    </a>
+    <a href="{{ route('admin.settings') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.settings' ? 'active' : 'black' }}">
+        <i class="bx bx-cog"></i>
+        <div class="flex grow-1">Pengaturan</div>
+        <i class="bx bx-chevron-right"></i>
+    </a>
 
     {{-- <div class="text size-12 muted mt-4 ml-2 mb-1">Data & Statistik</div> --}}
     <div class="h-40"></div>

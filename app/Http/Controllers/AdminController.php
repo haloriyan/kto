@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
 use App\Models\Exhibitor;
@@ -10,6 +11,8 @@ use App\Models\Visitor;
 use App\Models\VisitorScan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -206,5 +209,79 @@ class AdminController extends Controller
         return redirect()->route('admin.claim')->with([
             'message' => "Klaim hadiah berhasil disetujui"
         ]);
+    }
+    public function settings() {
+        $myData = self::me();
+        $message = Session::get('message');
+
+        return view('admin.settings', [
+            'myData' => $myData,
+            'message' => $message,
+        ]);
+    }
+    public function updateSettings(Request $request) {
+        $toUpdate = ['max_distance', 'min_to_claim'];
+
+        foreach ($toUpdate as $key) {
+            $query = strtoupper($key)."=".$request->{$key};
+            Config::set(strtoupper($key), $request->{$key});
+        }
+
+        return redirect()->route('admin.settings')->with([
+            'message' => "Berhasil menyimpan perubahan pengaturan"
+        ]);
+    }
+
+    public function admin() {
+        $myData = self::me();
+        $admins = Admin::all();
+        $message = Session::get('message');
+
+        return view('admin.admin', [
+            'myData' => $myData,
+            'admins' => $admins,
+            'message' => $message,
+        ]);
+    }
+    public function store(Request $request) {
+        $saveData = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('admin.admin')->with([
+            'message' => "Berhasil menambahkan user administrator baru"
+        ]);
+    }
+    public function delete(Request $request) {
+        $data = Admin::where('id', $request->id);
+        $admin = $data->first();
+
+        $data->delete();
+
+        return redirect()->route('admin.admin')->with([
+            'message' => "Berhasil menghapus " . $admin->name,
+        ]);
+    }
+    public function changePassword(Request $request) {
+        $myData = self::me();
+        $data = Admin::where('id', $request->id);
+        $admin = $data->first();
+
+        $data->update([
+            'password' => bcrypt($request->password)
+        ]);
+
+        if ($admin->id == $myData->id) {
+            $loggingOut = Auth::guard('admin')->logout();
+            return redirect()->route('admin.loginPage')->with([
+                'message' => "Berhasil mengubah password. Silahkan login dengan password baru Anda"
+            ]);
+        } else {
+            return redirect()->route('admin.admin')->with([
+                'message' => "Berhasil mengubah password untuk " . $admin->name,
+            ]);
+        }
     }
 }

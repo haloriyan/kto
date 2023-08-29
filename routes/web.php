@@ -22,12 +22,24 @@ Route::group(['prefix' => "admin"], function () {
     Route::get('login', "AdminController@loginPage")->name('admin.loginPage');
     Route::post('login', "AdminController@login")->name('admin.login');
     Route::get('logout', "AdminController@logout")->name('admin.logout');
+    Route::get('/', function () {
+        return redirect()->route('admin.loginPage');
+    });
 
     Route::group(['middleware' => "Admin"], function () {
         Route::get('dashboard', "AdminController@dashboard")->name('admin.dashboard');
         Route::get('exhibitor', "AdminController@exhibitor")->name('admin.exhibitor');
+        Route::get('settings', "AdminController@settings")->name('admin.settings');
+        Route::post('settings/update', "AdminController@updateSettings")->name('admin.updateSettings');
         Route::get('visitting', "AdminController@visitting")->name('admin.visitting');
         Route::get('appointment', 'AdminController@appointment')->name('admin.appointment');
+
+        Route::group(['prefix' => "admin"], function () {
+            Route::get('admin', "AdminController@admin")->name('admin.admin');
+            Route::post('store', "AdminController@store")->name('admin.admin.store');
+            Route::post('delete', "AdminController@delete")->name('admin.admin.delete');
+            Route::post('change-password', "AdminController@changePassword")->name('admin.admin.changePassword');
+        });
 
         Route::group(['prefix' => "visitor"], function () {
             Route::get('/', "AdminController@visitor")->name('admin.visitor');
