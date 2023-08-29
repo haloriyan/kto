@@ -4,7 +4,6 @@
     
 @section('content')
 
-{{ $nama }}
 <form action="{{ route('visitor.login') }}" method="POST" id="LoginForm" onsubmit="LoggingIn(event)">
     {{ csrf_field() }}
     
