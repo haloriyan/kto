@@ -47,7 +47,7 @@
                     @if ($user->join_type == "personal")
                         <td>Personal</td>
                     @else
-                        <td>{{ $user->from_company }}</td>
+                        <td>{{ $user->from_company }} ({{ ucwords($user->join_type) }})</td>
                     @endif
                     <td style="display: flex;flex-direction: row; gap: 20px;">
                         @if ($user->eligible)
