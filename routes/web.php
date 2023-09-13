@@ -34,6 +34,11 @@ Route::group(['prefix' => "admin"], function () {
         Route::get('visitting', "AdminController@visitting")->name('admin.visitting');
         Route::get('appointment', 'AdminController@appointment')->name('admin.appointment');
 
+        Route::group(['prefix' => "kmtm-user"], function () {
+            Route::get('/', "AdminController@kmtmUser")->name('admin.kmtmUser');
+            Route::get('/{id}/eligible', "AdminController@kmtmEligible")->name('admin.kmtmEligible');
+        });
+
         Route::group(['prefix' => "admin"], function () {
             Route::get('admin', "AdminController@admin")->name('admin.admin');
             Route::post('store', "AdminController@store")->name('admin.admin.store');

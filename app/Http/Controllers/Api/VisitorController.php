@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Str;
 use App\Models\Visitor;
 use App\Http\Controllers\Controller;
+use App\Models\KmtmUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -51,6 +52,40 @@ class VisitorController extends Controller
         return response()->json([
             'status' => 200,
             'visitor' => $visitor
+        ]);
+    }
+    public function kmtmRegister(Request $request) {
+        $status = 200;
+        $message = "";
+        $lang = $request->lang;
+        $check = KmtmUser::where([
+            ['name', 'LIKE', '%'.$request->name.'%'],
+            ['email', 'LIKE', '%'.$request->email.'%'],
+        ])->first();
+
+        if ($check != "") {
+            $status = 405;
+            $message = $lang == "en" ? 
+                "You already registered to KMTM. Please wait for data verification and we will reach you soon" : 
+                "Anda telah terdaftar sebagai peserta KMTM. Mohon menunggu verifikasi dan kami akan segera memberi tahu Anda";
+        } else {
+            $saveData = KmtmUser::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'join_type' => $request->joinType,
+                'from_company' => $request->fromCompany,
+                'eligible' => false,
+                'has_notified' => false,
+            ]);
+            $message = $lang == "en" ? 
+                "Thank you for joining KMTM. Please wait for data verification and we will reach you soon." : 
+                "Terima kasih telah bergabung pada KMTM. Mohon menunggu verifikasi dan kami akan segera memberi tahu Anda";
+        }
+
+        return response()->json([
+            'status' => $status,
+            'message' => $message
         ]);
     }
 }

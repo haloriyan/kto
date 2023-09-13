@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
 use App\Models\Exhibitor;
+use App\Models\KmtmUser;
 use App\Models\Schedule;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
@@ -177,6 +178,36 @@ class AdminController extends Controller
             'appointments' => $appointments,
             'request' => $request,
             'total_data' => $total_data,
+        ]);
+    }
+    public function kmtmUser(Request $request) {
+        $myData = self::me();
+        $filter = [];
+        $message = Session::get('message');
+
+        if ($request->q != "") {
+            array_push($filter, ['name', 'LIKE', '%'.$request->q.'%']);
+        }
+
+        $users = KmtmUser::where($filter)->paginate(1);
+        $total = KmtmUser::orderBy('created_at', 'DESC')->get('id')->count();
+
+        return view('admin.kmtm_user', [
+            'myData' => $myData,
+            'request' => $request,
+            'message' => $message,
+            'total' => $total,
+            'users' => $users,
+        ]);
+    }
+    public function kmtmEligible($id) {
+        $data = KmtmUser::where('id', $id);
+        $user = $data->first();
+
+        $data->update(['eligible' => !$user->eligible]);
+
+        return redirect()->route('admin.kmtmUser')->with([
+            'message' => "Berhasil mengubah status eligible"
         ]);
     }
     public function claim(Request $request) {
