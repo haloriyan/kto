@@ -189,7 +189,7 @@ class AdminController extends Controller
             array_push($filter, ['name', 'LIKE', '%'.$request->q.'%']);
         }
 
-        $users = KmtmUser::where($filter)->paginate(1);
+        $users = KmtmUser::where($filter)->paginate(25);
         $total = KmtmUser::orderBy('created_at', 'DESC')->get('id')->count();
 
         return view('admin.kmtm_user', [

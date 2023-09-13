@@ -34,6 +34,7 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Telepon</th>
+                <th>Brand / Company</th>
                 <th></th>
             </tr>
         </thead>
@@ -43,6 +44,11 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
+                    @if ($user->join_type == "personal")
+                        <td>Personal</td>
+                    @else
+                        <td>{{ $user->from_company }}</td>
+                    @endif
                     <td style="display: flex;flex-direction: row; gap: 20px;">
                         @if ($user->eligible)
                             <button class="primary small">
@@ -57,5 +63,9 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="mt-2">
+        {{ $users->links('pagination::bootstrap-4') }}
+    </div>
 </div>
 @endsection
