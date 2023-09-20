@@ -10,6 +10,7 @@ class KmtmUser extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'phone', 'join_type', 'from_company', 'eligible', 'has_notified'
+        'name', 'email', 'phone', 'website', 'join_type', 'reference', 'from_company', 'line_of_business', 'company_established',
+        'custom_field', 'eligible', 'has_notified'
     ];
 }

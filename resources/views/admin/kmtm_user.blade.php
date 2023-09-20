@@ -41,7 +41,11 @@
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->name }}</td>
+                    <td>
+                        <a href="{{ route('admin.kmtmDetail', $user->id) }}" class="text primary underline">
+                            {{ $user->name }}
+                        </a>
+                    </td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
                     @if ($user->join_type == "personal")

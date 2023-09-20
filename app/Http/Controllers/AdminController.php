@@ -210,6 +210,20 @@ class AdminController extends Controller
             'message' => "Berhasil mengubah status eligible"
         ]);
     }
+    public function kmtmDetail($id) {
+        $myData = self::me();
+        $user = KmtmUser::where('id', $id)->first();
+        $names = explode(" ", $user->name);
+        $user->initial = $names[0][0];
+        if (count($names) > 1) {
+            $user->initial .= $names[count($names) - 1][0];
+        }
+
+        return view('admin.kmtm_user_detail', [
+            'user' => $user,
+            'myData' => $myData,
+        ]);
+    }
     public function claim(Request $request) {
         $myData = self::me();
         $message = Session::get('message');

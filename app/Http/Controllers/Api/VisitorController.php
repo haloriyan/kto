@@ -58,6 +58,7 @@ class VisitorController extends Controller
         $status = 200;
         $message = "";
         $lang = $request->lang;
+        $answers = json_encode($request->answers);
         $check = KmtmUser::where([
             ['name', 'LIKE', '%'.$request->name.'%'],
             ['email', 'LIKE', '%'.$request->email.'%'],
@@ -73,10 +74,15 @@ class VisitorController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'website' => $request->website,
+                'reference' => $request->reference,
                 'join_type' => $request->joinType,
                 'from_company' => $request->fromCompany,
+                'line_of_business' => $request->lineOfBusiness,
+                'company_established' => $request->companyEstablished,
                 'eligible' => false,
                 'has_notified' => false,
+                'custom_field' => $answers,
             ]);
             $message = $lang == "en" ? 
                 "Thank you for joining KMTM. Please wait for data verification and we will reach you soon." : 
