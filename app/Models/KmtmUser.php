@@ -11,6 +11,6 @@ class KmtmUser extends Model
 
     protected $fillable = [
         'name', 'email', 'phone', 'website', 'join_type', 'reference', 'from_company', 'line_of_business', 'company_established',
-        'custom_field', 'eligible', 'has_notified'
+        'custom_field', 'eligible', 'has_notified', 'interesting_sellers'
     ];
 }

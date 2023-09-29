@@ -12,3 +12,4 @@ Route::group(['prefix' => "visitor"], function () {
 });
 Route::post('appointment-schedule', "ScheduleController@get")->name('api.AppointmentSchedule');
 Route::post('kmtm-register', "VisitorController@kmtmRegister");
+Route::get('exhibitor', "VisitorController@listExhibitor");

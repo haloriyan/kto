@@ -22,6 +22,8 @@
             @else
                 <div class="text small muted">REFERENSI</div>
                 <div class="text bold size-20">{{ $user->reference }}</div>
+                <div class="text small muted mt-2">WANT TO VISIT SELLERS</div>
+                <div class="text bold size-20">{{ $user->interesting_sellers }}</div>
             @endif
         </div>
         <div class="flex column grow-1">
@@ -37,6 +39,7 @@
     </div>
 </div>
 
+@if ($user->join_type == "company")
 <div class="bg-white shadow rounded p-4 mt-4 flex row gap-40">
     <div class="flex column grow-1">
         <div class="text small muted">NAMA PERUSAHAAN</div>
@@ -51,6 +54,7 @@
         <div class="text bold">{{ $user->company_established }}</div>
     </div>
 </div>
+@endif
 
 @if ($user->custom_field != null && $user->join_type != "personal")
 <div class="bg-white shadow rounded p-4 mt-4">

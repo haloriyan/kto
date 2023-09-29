@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('custom_field')->nullable()->after('from_company');
             $table->string('line_of_business')->nullable()->after('from_company');
             $table->string('company_established')->nullable()->after('line_of_business');
+            $table->longText('interesting_sellers')->nullable()->after('company_established');
         });
     }
 

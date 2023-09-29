@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Str;
 use App\Models\Visitor;
 use App\Http\Controllers\Controller;
+use App\Models\Exhibitor;
 use App\Models\KmtmUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -83,6 +84,7 @@ class VisitorController extends Controller
                 'eligible' => false,
                 'has_notified' => false,
                 'custom_field' => $answers,
+                'interesting_sellers' => implode(",", $request->interesting_sellers)
             ]);
             $message = $lang == "en" ? 
                 "Thank you for joining KMTM. Please wait for data verification and we will reach you soon." : 
@@ -92,6 +94,13 @@ class VisitorController extends Controller
         return response()->json([
             'status' => $status,
             'message' => $message
+        ]);
+    }
+    public function listExhibitor() {
+        $exhibitors = Exhibitor::orderBy('name', 'ASC')->get();
+
+        return response()->json([
+            'exhibitors' => $exhibitors
         ]);
     }
 }
