@@ -71,6 +71,8 @@ class VisitorController extends Controller
                 "You already registered to KMTM. Please wait for data verification and we will reach you soon" : 
                 "Anda telah terdaftar sebagai peserta KMTM. Mohon menunggu verifikasi dan kami akan segera memberi tahu Anda";
         } else {
+            $sellers = $request->interesting_sellers == null ? null : implode(",", $request->interesting_sellers);
+
             $saveData = KmtmUser::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -84,7 +86,7 @@ class VisitorController extends Controller
                 'eligible' => false,
                 'has_notified' => false,
                 'custom_field' => $answers,
-                'interesting_sellers' => implode(",", $request->interesting_sellers)
+                'interesting_sellers' => $sellers
             ]);
             $message = $lang == "en" ? 
                 "Thank you for joining KMTM. Please wait for data verification and we will reach you soon." : 
