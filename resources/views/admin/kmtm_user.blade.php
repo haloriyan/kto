@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', "Peserta KMTM")
+@section('title', "Buyer KMTM")
     
 @section('content')
 @if ($message != "")
@@ -12,7 +12,7 @@
 <div class="bg-white p-4 rounded-more shadow">
     <div class="flex row justify-end">
         <div class="flex column grow-1">
-            <div class="text small">Total Peserta :</div>
+            <div class="text small">Total Buyer :</div>
             <h2 class="text size-36 mt-0">{{ $total }}</h2>
         </div>
         <form>

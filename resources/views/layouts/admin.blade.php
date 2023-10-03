@@ -73,7 +73,7 @@
     <div class="h-40"></div>
     <a href="{{ route('admin.kmtmUser') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.kmtmUser' ? 'active' : 'black' }}">
         <i class="bx bx-group"></i>
-        <div class="flex grow-1">Peserta KMTM</div>
+        <div class="flex grow-1">Buyer KMTM</div>
         <i class="bx bx-chevron-right"></i>
     </a>
     <a href="{{ route('admin.visitting') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.visitting' ? 'active' : 'black' }}">
