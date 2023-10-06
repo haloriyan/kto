@@ -56,7 +56,7 @@
 </div>
 @endif
 
-@if ($user->custom_field != null && $user->join_type != "personal")
+@if ($user->custom_field != null)
 <div class="bg-white shadow rounded p-4 mt-4">
     <table>
         <thead>

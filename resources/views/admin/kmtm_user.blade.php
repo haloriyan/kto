@@ -27,6 +27,9 @@
             </div>
         </form>
     </div>
+    <a href="{{ route('admin.kmtmUser.export') }}" class="flex justify-end">
+        <button class="green small">Download Excel</button>
+    </a>
 
     <table>
         <thead>

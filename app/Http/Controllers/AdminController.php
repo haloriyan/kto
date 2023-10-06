@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KMTMUser as ExportsKMTMUser;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
@@ -10,11 +11,13 @@ use App\Models\KmtmUser;
 use App\Models\Schedule;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -223,6 +226,24 @@ class AdminController extends Controller
             'user' => $user,
             'myData' => $myData,
         ]);
+    }
+    public function kmtmUserExport() {
+        $now = Carbon::now();
+        $filename = "KMTM User - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+        $users = KmtmUser::orderBy('created_at', 'DESC')->get();
+        $customFieldColumns = [];
+
+        foreach ($users as $user) {
+            if ($user->custom_field != null) {
+                $customFieldColumns = $user->custom_field;
+            }
+        }
+        $customFieldColumns = json_decode($customFieldColumns, false);
+        
+        return Excel::download(new ExportsKMTMUser([
+            'users' => $users,
+            'field_columns' => $customFieldColumns
+        ]), $filename);
     }
     public function claim(Request $request) {
         $myData = self::me();

@@ -36,6 +36,7 @@ Route::group(['prefix' => "admin"], function () {
 
         Route::group(['prefix' => "kmtm-user"], function () {
             Route::get('/', "AdminController@kmtmUser")->name('admin.kmtmUser');
+            Route::get('/export', "AdminController@kmtmUserExport")->name('admin.kmtmUser.export');
             Route::get('/{id}/eligible', "AdminController@kmtmEligible")->name('admin.kmtmEligible');
             Route::get('/{id}/detail', "AdminController@kmtmDetail")->name('admin.kmtmDetail');
         });
