@@ -7,6 +7,7 @@ use App\Models\Visitor;
 use App\Http\Controllers\Controller;
 use App\Models\Exhibitor;
 use App\Models\KmtmUser;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -103,6 +104,13 @@ class VisitorController extends Controller
 
         return response()->json([
             'exhibitors' => $exhibitors
+        ]);
+    }
+    public function seller() {
+        $sellers = Seller::orderBy('created_at', 'DESC')->with('payloads')->get();
+        
+        return response()->json([
+            'sellers' => $sellers
         ]);
     }
 }
