@@ -54,6 +54,16 @@ Route::group(['prefix' => "admin"], function () {
             Route::get('/{id}/eligible', "VisitorController@appointmentEligible")->name('admin.visitor.eligible');
         });
 
+        Route::group(['prefix' => "seller"], function () {
+            Route::post('store', "SellerController@store")->name('seller.store');
+            Route::post('update', "SellerController@update")->name('seller.update');
+            Route::post('delete', "SellerController@delete")->name('seller.delete');
+            Route::get('create', "SellerController@create")->name('seller.create');
+            Route::get('/{id}/edit', "SellerController@edit")->name('seller.edit');
+            Route::get('/', "AdminController@seller")->name('admin.seller');
+            // Route::get('{slug}/qr', "SellerController@qr")->name('seller.qr');
+        });
+
         Route::group(['prefix' => "exhibitor"], function () {
             Route::post('store', "ExhibitorController@store")->name('exhibitor.store');
             Route::post('delete', "ExhibitorController@delete")->name('exhibitor.delete');

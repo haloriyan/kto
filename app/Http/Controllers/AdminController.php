@@ -9,6 +9,7 @@ use App\Models\Claim;
 use App\Models\Exhibitor;
 use App\Models\KmtmUser;
 use App\Models\Schedule;
+use App\Models\Seller;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
 use Carbon\Carbon;
@@ -88,6 +89,17 @@ class AdminController extends Controller
         return view('admin.exhibitor', [
             'myData' => $myData,
             'exhibitors' => $exhibitors,
+        ]);
+    }
+    public function seller() {
+        $myData = self::me();
+        $message = Session::get('message');
+        $sellers = Seller::orderBy('created_at', 'DESC')->with(['payloads'])->get();
+
+        return view('admin.seller', [
+            'myData' => $myData,
+            'message' => $message,
+            'sellers' => $sellers
         ]);
     }
     public function visitor(Request $request) {

@@ -58,6 +58,8 @@ button.red {
 button.red:hover { background-color: var(--redDark); }
 button.red.transparent { background-color: var(--redTransparent);color: var(--red); }
 button.red.transparent:hover { background-color: var(--red);color: #fff; }
+button.green.transparent { background-color: var(--greenTransparent);color: var(--green); }
+button.green.transparent:hover { background-color: var(--green);color: #fff; }
 
 button.primary {
     background-color: var(--primary);
