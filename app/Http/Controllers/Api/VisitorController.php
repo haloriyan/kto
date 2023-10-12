@@ -107,7 +107,7 @@ class VisitorController extends Controller
         ]);
     }
     public function seller() {
-        $sellers = Seller::orderBy('created_at', 'DESC')->with('payloads')->get();
+        $sellers = Seller::orderBy('name', 'ASC')->with('payloads')->get();
         
         return response()->json([
             'sellers' => $sellers

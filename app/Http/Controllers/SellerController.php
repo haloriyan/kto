@@ -55,6 +55,7 @@ class SellerController extends Controller
         $logoFileName = $logo->getClientOriginalName();
 
         $saveData = Seller::create([
+            'name' => $request->payloads['name_en'],
             'logo' => $logoFileName,
             'website' => $request->website
         ]);
@@ -98,5 +99,20 @@ class SellerController extends Controller
         return redirect()->route('admin.seller')->with([
             'message' => "Berhasil menghapus seller"
         ]);
+    }
+    public function updateDb() {
+        $sellers = Seller::with('payloads')->get();
+        
+        foreach ($sellers as $seller) {
+            $newName = "";
+            foreach ($seller->payloads as $payload) {
+                if ($payload->type == "name_en") {
+                    $newName = $payload->value;
+                }
+            }
+            $updateData = Seller::where('id', $seller->id)->update([
+                'name' => $newName
+            ]);
+        }
     }
 }

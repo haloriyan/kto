@@ -60,6 +60,7 @@ Route::group(['prefix' => "admin"], function () {
             Route::post('delete', "SellerController@delete")->name('seller.delete');
             Route::get('create', "SellerController@create")->name('seller.create');
             Route::get('/{id}/edit', "SellerController@edit")->name('seller.edit');
+            Route::get('update-db', "SellerController@updateDb");
             Route::get('/', "AdminController@seller")->name('admin.seller');
             // Route::get('{slug}/qr', "SellerController@qr")->name('seller.qr');
         });

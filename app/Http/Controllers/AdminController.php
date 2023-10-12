@@ -94,7 +94,7 @@ class AdminController extends Controller
     public function seller() {
         $myData = self::me();
         $message = Session::get('message');
-        $sellers = Seller::orderBy('created_at', 'DESC')->with(['payloads'])->get();
+        $sellers = Seller::orderBy('name', 'ASC')->with(['payloads'])->get();
 
         return view('admin.seller', [
             'myData' => $myData,

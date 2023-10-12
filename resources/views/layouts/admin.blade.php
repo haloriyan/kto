@@ -43,9 +43,9 @@
         <div class="flex grow-1">Dashboard</div>
         <i class="bx bx-chevron-right"></i>
     </a>
-    <a href="{{ route('admin.exhibitor') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.exhibitor' ? 'active' : 'black' }}">
+    <a href="{{ route('admin.seller') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.seller' ? 'active' : 'black' }}">
         <i class="bx bx-store"></i>
-        <div class="flex grow-1">Exhibitor</div>
+        <div class="flex grow-1">Seller</div>
         <i class="bx bx-chevron-right"></i>
     </a>
     <a href="{{ route('admin.visitor') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ ($routeName == 'admin.visitor' || $routeName == 'admin.visitor.detail') ? 'active' : 'black' }}">

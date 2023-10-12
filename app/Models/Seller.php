@@ -10,7 +10,7 @@ class Seller extends Model
     use HasFactory;
 
     protected $fillable = [
-        'logo', 'website'
+        'logo', 'website', 'name'
     ];
 
     public function payloads() {
