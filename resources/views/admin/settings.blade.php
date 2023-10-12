@@ -20,7 +20,32 @@
             <label for="min_to_claim">Minimal Scan untuk Klaim Hadiah</label>
         </div>
 
+        <div class="flex row item-center gap-20">
+            <div class="group flex column grow-1">
+                <input type="text" name="latitude" id="lat" value="{{ env('LATITUDE') }}">
+                <label for="lat">Latitude :</label>
+            </div>
+            <div class="group flex column grow-1">
+                <input type="text" name="longitude" id="long" value="{{ env('LONGITUDE') }}">
+                <label for="long">Longitude :</label>
+            </div>
+            <div class="pointer text primary bold" onclick="getCoordinates()">
+                Get
+            </div>
+        </div>
+
         <button class="primary w-100 mt-3">Simpan Perubahan</button>
     </form>
 </div>
+@endsection
+
+@section('javascript')
+<script>
+    const getCoordinates = () => {
+        navigator.geolocation.getCurrentPosition(position => {
+            select("input#lat").value = position.coords.latitude;
+            select("input#long").value = position.coords.longitude;
+        })
+    }
+</script>
 @endsection

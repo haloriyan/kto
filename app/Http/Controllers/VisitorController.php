@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Claim;
 use App\Models\Exhibitor;
+use App\Models\Scan;
+use App\Models\Seller;
 use Session;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
@@ -67,7 +69,8 @@ class VisitorController extends Controller
     }
     public function logout() {
         $loggingOut = Auth::guard('visitor')->logout();
-        return redirect()->route('visitor.loginPage');
+        return view('visitor.logout');
+        // return redirect()->route('visitor.loginPage');
     }
     public function auth($token, $redirectTo = NULL) {
         $visitor = Visitor::where('token', $token)->first();
@@ -90,23 +93,23 @@ class VisitorController extends Controller
         ]);
     }
     public function boothScan($uniqueID) {
-        $exhibitor = Exhibitor::where('unique_id', $uniqueID)->first();
+        $seller = Seller::where('id', base64_decode($uniqueID))->first();
         $myData = self::me();
 
-        $check = VisitorScan::where([
-            ['exhibitor_id', $exhibitor->id],
+        $check = Scan::where([
+            ['seller_id', $seller->id],
             ['visitor_id', $myData->id]
         ])->first();
 
         if ($check == "") {
-            $saveData = VisitorScan::create([
-                'exhibitor_id' => $exhibitor->id,
+            $saveData = Scan::create([
+                'seller_id' => $seller->id,
                 'visitor_id' => $myData->id,
             ]);
         }
 
         return view('visitor.doneScan', [
-            'exhibitor' => $exhibitor,
+            'seller' => $seller,
         ]);
     }
     public function scanningBooth(Request $request) {
@@ -116,8 +119,8 @@ class VisitorController extends Controller
         $myData = self::me();
         $message = Session::get('message');
 
-        $histories = VisitorScan::where('visitor_id', $myData->id)
-        ->with('exhibitor')
+        $histories = Scan::where('visitor_id', $myData->id)
+        ->with('seller.payloads')
         ->get();
 
         return view('visitor.history', [

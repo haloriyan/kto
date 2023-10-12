@@ -15,7 +15,7 @@
 @endif
 <div class="flex row gap-20 wrap">
     @foreach ($sellers as $seller)
-        <div class="flex column grow-1 basis-4 bg-white rounded border bottom-6 primary transparent">
+        <div class="flex column grow-1 basis-4 bg-white rounded border bottom-6 primary transparent relative">
             <img 
                 src="{{ asset('storage/seller_logos/' . $seller->logo) }}" 
                 class="w-100 ratio-5-2 rounded-top-left rounded-top-right bg-grey cover"
@@ -35,6 +35,13 @@
                         Hapus
                     </button>
                 </div>
+            </div>
+
+            <div class="absolute top-0 right-0 m-05 hover-to-show">
+                <a href="{{ route('seller.qr', $seller->id) }}" class="bg-blue p-05 pl-2 pr-2 rounded flex row item-center gap-10 pointer">
+                    <i class="bx bx-qr"></i>
+                    QR
+                </a>
             </div>
         </div>
     @endforeach

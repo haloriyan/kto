@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Seller;
 use App\Models\SellerPayload;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SellerController extends Controller
 {
@@ -114,5 +116,18 @@ class SellerController extends Controller
                 'name' => $newName
             ]);
         }
+    }
+    public function qr($id) {
+        $seller = Seller::where('id', $id)->with('payloads')->first();
+
+        $str = route('boothScan', base64_encode($seller->id));
+        $qrCode = QrCode::size(150)->generate($str);
+
+        $pdf = Pdf::loadView('pdf.ExhibitorQR', [
+            'seller' => $seller,
+            'qrCode' => $qrCode,
+        ]);
+
+        return $pdf->stream();
     }
 }

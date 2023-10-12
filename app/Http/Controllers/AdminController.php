@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Claim;
 use App\Models\Exhibitor;
 use App\Models\KmtmUser;
+use App\Models\Scan;
 use App\Models\Schedule;
 use App\Models\Seller;
 use App\Models\Visitor;
@@ -139,17 +140,17 @@ class AdminController extends Controller
     public function visitting(Request $request) {
         $myData = self::me();
 
-        $query = VisitorScan::orderBy('created_at', 'DESC');
+        $query = Scan::orderBy('created_at', 'DESC');
         if ($request->q != "") {
             $query = $query->whereHas('visitor', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
-            })->orWhereHas('exhibitor', function ($q) use ($request) {
+            })->orWhereHas('seller', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
 
         $visits = $query
-        ->with(['exhibitor', 'visitor'])
+        ->with(['seller.payloads', 'visitor'])
         ->paginate(25);
         $visits->appends($request->query());
 
@@ -297,12 +298,30 @@ class AdminController extends Controller
             'message' => $message,
         ]);
     }
+    public function changeEnv($key, $newValue, $delim = '') {
+        $path = base_path('.env');
+        $oldValue = env($key);
+
+        if ($oldValue == $newValue) return;
+        
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                $key.'='.$delim.$oldValue.$delim, 
+                $key.'='.$delim.$newValue.$delim,
+                file_get_contents($path)
+            ));
+            file_put_contents($path, str_replace(
+                $key.'="'.$delim.$oldValue.$delim.'"', 
+                $key.'="'.$delim.$newValue.$delim.'"',
+                file_get_contents($path)
+            ));
+        }
+    }
     public function updateSettings(Request $request) {
-        $toUpdate = ['max_distance', 'min_to_claim'];
+        $toUpdate = ['max_distance', 'min_to_claim', 'latitude', 'longitude'];
 
         foreach ($toUpdate as $key) {
-            $query = strtoupper($key)."=".$request->{$key};
-            Config::set(strtoupper($key), $request->{$key});
+            $this->changeEnv(strtoupper($key), $request->{$key});
         }
 
         return redirect()->route('admin.settings')->with([

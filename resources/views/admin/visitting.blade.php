@@ -32,7 +32,7 @@
             @foreach ($visits as $item)
                 <tr>
                     <td>{{ $item->visitor->name }}</td>
-                    <td>{{ $item->exhibitor->name }}</td>
+                    <td>{{ $item->seller->name }}</td>
                     <td>
                         {{ Carbon::parse($item->created_at)->format('d M, H:i') }}
                     </td>

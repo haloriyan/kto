@@ -21,7 +21,7 @@
 
     <h2 class="text size-24 bold m-0 mt-4">Berhasil Scan</h2>
     <div class="text muted center mt-1">
-        Anda terekam telah mengunjungi booth "{{ $exhibitor->name }}"
+        Anda terekam telah mengunjungi booth "{{ $seller->name }}"
     </div>
 
     <a href="{{ route('historyScan') }}" class="text primary pointer center bold mt-3">Lihat Riwayat Kunjungan Saya</a>

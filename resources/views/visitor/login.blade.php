@@ -4,7 +4,7 @@
     
 @section('content')
 
-<form action="{{ route('visitor.login') }}" method="POST" id="LoginForm" onsubmit="LoggingIn(event)">
+<form action="{{ route('visitor.login') }}" method="POST" id="LoginForm" onsubmit="LoggingIn(event)" style="display: none;">
     {{ csrf_field() }}
     
     <input type="hidden" name="r" id="r" value="{{ $request->r }}">
@@ -27,6 +27,8 @@
 
     <button class="primary w-100 mt-2">Berikutnya</button>
 </form>
+
+<div id="DistanceTooFar" style="display: none">Anda harus berada dalam lokasi untuk melanjutkan</div>
 @endsection
 
 @section('javascript')
@@ -43,24 +45,30 @@
         let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
         let d = R * c;
         d = d * 1000;
-        return d // in km
+        return d // in m
     }
     const select = dom => document.querySelector(dom);
 
     const getMyLocation = () => {
         navigator.geolocation.getCurrentPosition(pos => {
-            console.log(pos);
             let lat = pos.coords.latitude;
             let lng = pos.coords.longitude;
+            console.log(pos.coords);
 
             let dist = calculate(
                 {lat, lng},
-                {lat: -7.256188, lng: 112.737142}
+                {lat: "{{ env('LATITUDE') }}", lng: "{{ env('LONGITUDE') }}"}
             );
             let maxDistance = parseInt("{{ env('MAX_DISTANCE') }}");
+            console.log(dist);
             if (dist > maxDistance) {
-                // 
+                select("form#LoginForm").remove();
+                select("#DistanceTooFar").style.display = "block";
+            } else {
+                select("#LoginForm").style.display = "block";
             }
+        }, null, {
+            enableHighAccuracy: false
         })
     }
 
@@ -94,6 +102,8 @@
         let token = window.localStorage.getItem('visitor_token');
         if (token) {
             window.location.href = `{{ route('visitor.authorize') }}/${token}/${redirectTo}`;
+        } else {
+            getMyLocation()
         }
     }
 
