@@ -381,4 +381,32 @@ class AdminController extends Controller
             ]);
         }
     }
+    public function migrateKmtmBuyer() {
+        $buyers = KmtmUser::all();
+        foreach ($buyers as $buyer) {
+            $query = Visitor::where([
+                ['name', $buyer->name],
+                ['email', $buyer->email],
+            ]);
+            $visitor = $query->first();
+
+            if ($visitor == "") {
+                $saveAsBuyer = Visitor::create([
+                    'name' => $buyer->name,
+                    'email' => $buyer->email,
+                    'password' => bcrypt('inikatasandi'),
+                    'is_active' => 1,
+                    'appointment_eligible' => 0,
+                    'token' => null,
+                    'is_kmtm_buyer' => true,
+                ]);
+            } else {
+                $query->update([
+                    'is_kmtm_buyer' => true,
+                ]);
+            }
+        }
+
+        return $buyers;
+    }
 }

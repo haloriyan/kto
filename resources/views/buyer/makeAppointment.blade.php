@@ -13,25 +13,29 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+
+@php
+    use \App\Http\Controllers\BuyerController;
+@endphp
     
 <div class="absolute top-0 left-0 right-0 p-2">
-    <h2 class="m-0">Buat Janji Temu</h2>
+    <h2 class="m-0">@lang('appointment_title')</h2>
     <div class="h-40"></div>
-    <input type="hidden" id="exhibitor_id" value="{{ $exhibitor == null ? '' : $exhibitor->id }}">
+    <input type="hidden" id="exhibitor_id" value="{{ $seller == null ? '' : $seller->id }}">
     @if ($request->exid == null)
         @php
             $isGettingSchedule = false;
         @endphp
-        <div class="text">Pilih Exhibitor yang ingin Anda temui</div>
+        <div class="text">@lang('appointment_description')</div>
         <div class="flex column gap-20 mt-2">
-            @foreach ($exhibitors as $exhibitor)
-                <a href="{{ route('visitor.makeAppointment', ['exid' => $exhibitor->id]) }}" class="flex row item-center gap-20 border rounded p-2 text black">
+            @foreach ($sellers as $sell)
+                <a href="{{ route('kmtm.makeAppointment', ['exid' => $sell->id]) }}" class="flex row item-center gap-20 border rounded p-2 text black">
                     <img 
-                        src="{{ asset('storage/exhibitor_icons/' . $exhibitor->icon) }}" alt="{{ $exhibitor->name }}"
-                        class="h-50 ratio-1-1 rounded-max bg-grey"
+                        src="{{ asset('storage/seller_logos/' . $sell->logo) }}" alt="{{ $sell->name }}"
+                        class="h-50 ratio-1-1 rounded-max bg-grey cover"
                     >
                     <div class="flex column grow-1">
-                        <div class="text bold">{{ $exhibitor->name }}</div>
+                        <div class="text bold">{{ BuyerController::payload($sell, 'name_en') }}</div>
                     </div>
                 </a>
             @endforeach
@@ -40,7 +44,7 @@
         @php
             $isGettingSchedule = true;
         @endphp
-        <div class="text">Pilih jadwal janji temu dengan {{ $exhibitor->name }}</div>
+        <div class="text">@lang('appointment_description_b') {{ $seller->name }}</div>
         <div id="renderSchedule" class="flex column gap-20 mt-2"></div>
     @endif
 </div>
@@ -56,7 +60,7 @@
         parent.innerHTML = "";
         schedules.forEach(schedule => {
             let dt = new Date(schedule.date);
-            let endpoint = `{{ route('visitor.makeAppointment', ['exid' => $exhibitor->id]) }}&schedule_id=${schedule.id}`
+            let endpoint = `{{ route('kmtm.makeAppointment', ['exid' => $seller->id]) }}&schedule_id=${schedule.id}`
             
             let el = document.createElement('a');
             el.setAttribute('href', endpoint)
@@ -71,7 +75,7 @@
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                exhibitor_id: exhibitorID,
+                seller_id: exhibitorID,
             })
         })
         .then(res => res.json())
@@ -81,9 +85,7 @@
         })
     }
     
-    console.log(isGettingSchedule);
     if (isGettingSchedule) {
-        console.log('getting schedules...');
         setInterval(() => {
             getSchedules()
         }, 1000);

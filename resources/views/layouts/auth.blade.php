@@ -18,7 +18,7 @@
 <div class="absolute top-0 left-0 right-0 bottom-0 flex row centerize">
     <img 
         src="{{ asset('images/GATE_2.jpg') }}"
-        class="w-60 bg-red IllustrationContainer cover" style="height: 100%" 
+        class="w-60 IllustrationContainer cover" style="height: 100%" 
     />
     <div class="flex column grow-1 FormContainer">
         <div class="flex centerize mb-4">

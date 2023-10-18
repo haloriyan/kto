@@ -58,9 +58,9 @@
                     @endif
                     <td style="display: flex;flex-direction: row; gap: 20px;">
                         @if ($user->eligible)
-                            <button class="primary small">
+                            {{-- <button class="primary small">
                                 Kirim Notifikasi
-                            </button>
+                            </button> --}}
                         @endif
                         <a href="{{ route('admin.kmtmEligible', $user->id) }}" class="switch {{ $user->eligible ? 'on' : '' }}">
                             <div></div>

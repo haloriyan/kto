@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'visitors',
         ],
+        'buyer' => [
+            'driver' => 'session',
+            'provider' => 'buyers',
+        ],
     ],
 
     /*
@@ -79,6 +83,10 @@ return [
         'visitors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Visitor::class,
+        ],
+        'buyers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\KmtmUser::class,
         ],
 
         // 'users' => [

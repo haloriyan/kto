@@ -9,6 +9,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => "visitor"], function () {
     Route::post('login', "VisitorController@login")->name('api.visitor.login');
+    Route::post('auth', "VisitorController@auth")->name('api.visitor.auth');
 });
 Route::post('appointment-schedule', "ScheduleController@get")->name('api.AppointmentSchedule');
 Route::post('kmtm-register', "VisitorController@kmtmRegister");

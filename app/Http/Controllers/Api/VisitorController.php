@@ -27,6 +27,12 @@ class VisitorController extends Controller
 
         return $saveData;
     }
+    public function auth(Request $request) {
+        $visitor = Visitor::where('token', $request->token)->first();
+        return response()->json([
+            'visitor' => $visitor,
+        ]);
+    }
     public function login(Request $request) {
         $email = $request->email;
         $query = Visitor::where('email', $request->email);

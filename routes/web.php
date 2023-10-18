@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('visitor.loginPage');
+    return view('welcome');
 });
 
 Route::get('auth/{token?}/{redirectTo?}', "VisitorController@auth")->name('visitor.authorize');
@@ -13,9 +13,21 @@ Route::post('login', "VisitorController@login")->name('visitor.login');
 Route::post('register', "VisitorController@register")->name('visitor.register');
 Route::get('logout', "VisitorController@logout")->name('visitor.logout');
 
+Route::get('switch-lang/{lang}', "VisitorController@switchLang")->name('switchLang');
+
 Route::group(['middleware' => "Visitor"], function () {
     Route::get('home', "VisitorController@history")->name('visitor.home');
     Route::get('claim', "VisitorController@claim")->name('visitor.claim');
+});
+
+Route::group(['prefix' => "kmtm"], function () {
+    Route::get('/', function () {
+        return redirect()->route('kmtm.loginPage');
+    });
+    Route::get('login', "BuyerController@loginPage")->name('kmtm.loginPage');
+    Route::post('login', "BuyerController@login")->name('kmtm.login');
+    Route::get('home', "BuyerController@home")->name('kmtm.home');
+    Route::get('make-appointment', "BuyerController@makeAppointment")->name('kmtm.makeAppointment');
 });
 
 Route::group(['prefix' => "admin"], function () {
@@ -27,6 +39,7 @@ Route::group(['prefix' => "admin"], function () {
     });
 
     Route::group(['middleware' => "Admin"], function () {
+        Route::get('migrate-kmtm-buyer', "AdminController@migrateKmtmBuyer");
         Route::get('dashboard', "AdminController@dashboard")->name('admin.dashboard');
         Route::get('exhibitor', "AdminController@exhibitor")->name('admin.exhibitor');
         Route::get('settings', "AdminController@settings")->name('admin.settings');

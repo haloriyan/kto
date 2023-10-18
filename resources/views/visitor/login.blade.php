@@ -101,7 +101,25 @@
     const Authorize = () => {
         let token = window.localStorage.getItem('visitor_token');
         if (token) {
-            window.location.href = `{{ route('visitor.authorize') }}/${token}/${redirectTo}`;
+            fetch("{{ route('api.visitor.auth') }}", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token: token,
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                if (res.visitor === null) {
+                    window.localStorage.removeItem('visitor_token');
+                    getMyLocation();
+                } else {
+                    window.location.href = `{{ route('visitor.authorize') }}/${token}/${redirectTo}`;
+                }
+            });
         } else {
             getMyLocation()
         }

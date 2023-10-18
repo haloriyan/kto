@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 class ScheduleController extends Controller
 {
     public function get(Request $request) {
-        $exhibitorID = $request->exhibitor_id;
+        $sellerID = $request->seller_id;
         $schedulesRaw = Schedule::orderBy('date', 'ASC')->get();
         $schedules = [];
 
         foreach ($schedulesRaw as $i => $schedule) {
             $appointments = Appointment::where([
-                ['exhibitor_id', $exhibitorID],
+                ['seller_id', $sellerID],
                 ['schedule_id', $schedule->id]
             ])->get('id');
 

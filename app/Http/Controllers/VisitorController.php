@@ -11,6 +11,7 @@ use Session;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class VisitorController extends Controller
@@ -34,6 +35,7 @@ class VisitorController extends Controller
         ]);
     }
     public function login(Request $request) {
+        return $request->password;
         $loggingIn = Auth::guard('visitor')->attempt([
             'email' => $request->email,
             'password' => $request->password,
@@ -197,6 +199,15 @@ class VisitorController extends Controller
         $data->update([
             'appointment_eligible' => !$visitor->appointment_eligible
         ]);
+
+        return redirect()->back();
+    }
+    public function switchLang($lang) {
+        session([
+            'user_lang' => $lang,
+            'expires' => now()->addHours(1234)
+        ]);
+        Artisan::call('view:clear');
 
         return redirect()->back();
     }
