@@ -26,7 +26,7 @@
     @endphp
 
     @if ($appointments->count() == 0)
-        <div class="mt-2">Tidak ada data</div>
+        <div class="mt-2">No appointment yet</div>
     @else
         @foreach ($appointments as $data)
             <div class="bg-white border rounded p-2 flex row item-center gap-20 mt-2">

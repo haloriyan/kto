@@ -62,8 +62,9 @@
             el.setAttribute('href', endpoint)
             el.classList.add('flex', 'row', 'item-center', 'gap-20', 'border', 'p-2', 'text', 'black');
             el.innerHTML = `<div class="flex grow-1 text size-18 bold">${dt.getDate()} ${months[dt.getMonth()]}</div>
-            <div class="text size-16">${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}</div>`;
+            <div class="text size-16"><i class="bx bx-time"></i> ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}</div>`;
             parent.appendChild(el);
+            console.log(cok);
         })
     }
     const getSchedules = () => {
@@ -83,7 +84,6 @@
     
     console.log(isGettingSchedule);
     if (isGettingSchedule) {
-        console.log('getting schedules...');
         setInterval(() => {
             getSchedules()
         }, 1000);

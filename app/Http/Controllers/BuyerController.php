@@ -93,7 +93,11 @@ class BuyerController extends Controller
         }
 
         if ($request->exid == null) {
-            $seller = $sellers[0];
+            if (count($sellers) > 0) {
+                $seller = $sellers[0];
+            } else {
+                return redirect()->back();
+            }
         } else {
             $seller = Seller::where('id', $request->exid)->first();
         }
