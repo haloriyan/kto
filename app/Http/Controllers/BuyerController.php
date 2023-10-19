@@ -65,7 +65,10 @@ class BuyerController extends Controller
         $sellersRaw = Seller::orderBy('name', 'ASC')->with(['payloads'])->get();
 
         foreach ($sellersRaw as $raw) {
-            $check = Appointment::where('seller_id', $raw->id)->first();
+            $check = Appointment::where([
+                ['seller_id', $raw->id],
+                ['buyer_id', $myData->id]
+            ])->first();
             if ($check == "") {
                 array_push($sellers, $raw);
             }
