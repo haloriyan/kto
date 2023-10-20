@@ -37,9 +37,9 @@
         <a href="/kmtm/login" class="btn pointer rounded-more bg-primary">
             Login to KMTM
         </a>
-        {{-- <a href="/login" class="btn pointer rounded-more border text primary">
-            Login to KMTE
-        </a> --}}
+        <a href="{{ route('kmte.registerPage') }}" class="btn pointer rounded-more border text primary">
+            Register to KMTE
+        </a>
     </div>
 </div>
 

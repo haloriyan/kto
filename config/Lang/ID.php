@@ -6,6 +6,7 @@ $id = [
     'buyer_login_button' => "Login sebagai Buyer KMTM",
     'kmtm_login_error' => "Anda tidak terdaftar sebagai Buyer",
     'hello' => "Hello",
+    'phone' => "No. Telepon",
 
     'my_appointment' => "My Appointment Schedule",
     'kmtm_home_button' => "Buat Janji Lainnya",

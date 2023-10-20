@@ -33,6 +33,17 @@ Route::group(['prefix' => "kmtm"], function () {
     });
 });
 
+Route::group(['prefix' => "kmte"], function () {
+    Route::get('/', function () {
+        return redirect()->route('kmte.loginPage');
+    });
+    Route::get('login', "KmteController@loginPage")->name('kmte.loginPage');
+    Route::post('login', "KmteController@login")->name('kmte.login');
+    Route::get('register', "KmteController@registerPage")->name('kmte.registerPage');
+    Route::post('register', "KmteController@register")->name('kmte.register');
+    Route::get('register/done', "KmteController@registerDone")->name('kmte.registerDone');
+});
+
 Route::group(['prefix' => "admin"], function () {
     Route::get('login', "AdminController@loginPage")->name('admin.loginPage');
     Route::post('login', "AdminController@login")->name('admin.login');

@@ -54,7 +54,7 @@
     @endif
 
     @if ($appointments->count() > 0)
-        <div class="mt-2 text size-14">You can visit our sellers at anytime between 15.30 - 17.10</div>
+        <div class="mt-2 text size-14">You can visit our sellers at anytime between 13.30 - 17.00</div>
     @endif
 
     @if (($appointments->count() < 6 && $myData->join_type == "company") || $myData->join_type == "personal")

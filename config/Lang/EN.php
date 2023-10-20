@@ -6,6 +6,7 @@ $en = [
     'buyer_login_button' => "Login as KMTM Buyer",
     'kmtm_login_error' => "You are not registered as Buyer",
     'hello' => "Hello",
+    'phone' => "Phone",
 
     'my_appointment' => "My Appointments",
     'kmtm_home_button' => "Make Another Appointment",

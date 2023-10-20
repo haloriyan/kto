@@ -1,4 +1,4 @@
-.pointer { cursor: pointer; }
+.pointer { cursor: pointer !important; }
 .cursor-default { cursor: default; }
 .centerize {
     display: flex;
