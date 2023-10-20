@@ -94,7 +94,7 @@
     <div class="text size-12 muted mt-4 ml-2 mb-1">KMTE</div>
     <a href="{{ route('admin.kmteUser') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.kmteUser' ? 'active' : 'black' }}">
         <i class="bx bx-group"></i>
-        <div class="flex grow-1">Peserta KMTE</div>
+        <div class="flex grow-1">Buyer KMTE</div>
         <i class="bx bx-chevron-right"></i>
     </a>
 

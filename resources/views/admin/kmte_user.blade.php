@@ -33,7 +33,8 @@
             <tr>
                 <th>Nama</th>
                 <th>Email</th>
-                <th>Telepon</th>
+                <th>Phone</th>
+                <th>Website / SNS</th>
                 <th>Company Referer</th>
                 <th>Willing to call?</th>
             </tr>
@@ -44,6 +45,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
+                    <td>{{ $user->website }}</td>
                     <td>{{ $user->referer }}</td>
                     <td>
                         @if ($user->eligible)

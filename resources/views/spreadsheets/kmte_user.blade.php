@@ -7,6 +7,7 @@
             <th style="font-weight: bold;">Name</th>
             <th style="font-weight: bold;">Email</th>
             <th style="font-weight: bold;">Phone</th>
+            <th style="font-weight: bold;">Website / SNS</th>
             <th style="font-weight: bold;">Company Referer</th>
             <th style="font-weight: bold;">Willing to Get Called</th>
         </tr>
@@ -17,6 +18,7 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->phone }}</td>
+                <td>{{ $user->website }}</td>
                 <td>{{ $user->referer }}</td>
                 <td>
                     @if ($user->eligible)
