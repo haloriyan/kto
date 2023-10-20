@@ -12,7 +12,7 @@ class KmteController extends Controller
         return view('kmte.register');
     }
     public function register(Request $request) {
-        $check = KmtmUser::where([
+        $check = KmteUser::where([
             ['name', 'LIKE', '%'.$request->name.'%'],
             ['email', 'LIKE', '%'.$request->email.'%']
         ])->get('id');
