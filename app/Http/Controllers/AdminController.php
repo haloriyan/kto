@@ -181,7 +181,7 @@ class AdminController extends Controller
         if ($request->q != "") {
             $query = $query->whereHas('seller', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
-            })->orWhereHas('visitor', function ($q) use ($request) {
+            })->orWhereHas('buyer', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
