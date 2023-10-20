@@ -85,6 +85,7 @@
         </div>
         <form action="{{ route('schedule.add') }}" class="modal-content" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
+            <input type="hidden" name="type" value="b2b">
             <div class="flex row gap-20">
                 <div class="flex column grow-1">
                     <div class="group">

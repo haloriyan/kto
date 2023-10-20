@@ -18,7 +18,8 @@ class ScheduleController extends Controller
         $date = $request->date . " " . $time;
         
         $saveData = Schedule::create([
-            'date' => $date, 
+            'date' => $date,
+            'type' => $request->type,
         ]);
 
         return redirect()->route('admin.schedule')->with([

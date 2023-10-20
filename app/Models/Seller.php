@@ -16,4 +16,7 @@ class Seller extends Model
     public function payloads() {
         return $this->hasMany(SellerPayload::class, 'seller_id');
     }
+    public function appointments() {
+        return $this->hasMany(Appointment::class, 'seller_id');
+    }
 }

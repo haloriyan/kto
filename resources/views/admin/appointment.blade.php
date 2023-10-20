@@ -26,6 +26,12 @@
         </form>
     </div>
 
+    <div class="flex row item-center gap-20 justify-end mb-2">
+        <a href="{{ route('admin.appointment.export') }}" class="flex justify-end">
+            <button class="green small">Download B2B Data</button>
+        </a>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -37,7 +43,11 @@
         <tbody>
             @foreach ($appointments as $item)
                 <tr>
-                    <td>{{ $item->buyer->name }}</td>
+                    <td>{{ $item->buyer->name }}
+                        @if ($item->buyer->join_type == "company")
+                            ({{ $item->buyer->from_company }})
+                        @endif
+                    </td>
                     <td>{{ $item->seller->name }}</td>
                     <td>
                         {{ Carbon::parse($item->schedule->date)->format('d M - H:i') }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AppointmentExport;
 use App\Exports\KMTMUser as ExportsKMTMUser;
 use App\Exports\KMTMUserB2C;
 use App\Models\Admin;
@@ -196,6 +197,21 @@ class AdminController extends Controller
             'request' => $request,
             'total_data' => $total_data,
         ]);
+    }
+    public function appointmentExport() {
+        $now = Carbon::now();
+        $appointments = Appointment::with(['buyer', 'seller.payloads'])->get();
+        $filename = "KMTM Appointments - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+        $sellers = Seller::orderBy('name', 'ASC')->with(['appointments.buyer'])->get();
+        $schedules = Schedule::orderBy('date', 'ASC')->get();
+
+        return Excel::download(new AppointmentExport([
+            'appointments' => $appointments,
+            'sellers' => $sellers,
+            'schedules' => $schedules,
+        ]), $filename);
+
+        return $appointments;
     }
     public function kmtmUser(Request $request) {
         $myData = self::me();
