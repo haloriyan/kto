@@ -48,11 +48,11 @@
         <div class="flex grow-1">Seller</div>
         <i class="bx bx-chevron-right"></i>
     </a>
-    <a href="{{ route('admin.visitor') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ ($routeName == 'admin.visitor' || $routeName == 'admin.visitor.detail') ? 'active' : 'black' }}">
+    {{-- <a href="{{ route('admin.visitor') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ ($routeName == 'admin.visitor' || $routeName == 'admin.visitor.detail') ? 'active' : 'black' }}">
         <i class="bx bx-group"></i>
         <div class="flex grow-1">Peserta</div>
         <i class="bx bx-chevron-right"></i>
-    </a>
+    </a> --}}
     <a href="{{ route('admin.schedule') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.schedule' ? 'active' : 'black' }}">
         <i class="bx bx-calendar"></i>
         <div class="flex grow-1">Jadwal Appointment</div>
@@ -69,8 +69,7 @@
         <i class="bx bx-chevron-right"></i>
     </a>
 
-    {{-- <div class="text size-12 muted mt-4 ml-2 mb-1">Data & Statistik</div> --}}
-    <div class="h-40"></div>
+    <div class="text size-12 muted mt-4 ml-2 mb-1">KMTM</div>
     <a href="{{ route('admin.kmtmUser') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.kmtmUser' ? 'active' : 'black' }}">
         <i class="bx bx-group"></i>
         <div class="flex grow-1">Buyer KMTM</div>
@@ -86,9 +85,16 @@
         <div class="flex grow-1">Appointment</div>
         <i class="bx bx-chevron-right"></i>
     </a>
-    <a href="{{ route('admin.claim') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.claim' ? 'active' : 'black' }}">
+    {{-- <a href="{{ route('admin.claim') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.claim' ? 'active' : 'black' }}">
         <i class="bx bx-gift"></i>
         <div class="flex grow-1">Klaim Hadiah</div>
+        <i class="bx bx-chevron-right"></i>
+    </a> --}}
+
+    <div class="text size-12 muted mt-4 ml-2 mb-1">KMTE</div>
+    <a href="{{ route('admin.kmteUser') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.kmteUser' ? 'active' : 'black' }}">
+        <i class="bx bx-group"></i>
+        <div class="flex grow-1">Peserta KMTE</div>
         <i class="bx bx-chevron-right"></i>
     </a>
 

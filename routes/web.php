@@ -69,6 +69,11 @@ Route::group(['prefix' => "admin"], function () {
             Route::get('/{id}/detail', "AdminController@kmtmDetail")->name('admin.kmtmDetail');
         });
 
+        Route::group(['prefix' => "kmte"], function () {
+            Route::get('export', "AdminController@kmteUserExport")->name('admin.kmteUser.export');
+            Route::get('/', "AdminController@kmteUser")->name('admin.kmteUser');
+        });
+
         Route::group(['prefix' => "admin"], function () {
             Route::get('admin', "AdminController@admin")->name('admin.admin');
             Route::post('store', "AdminController@store")->name('admin.admin.store');

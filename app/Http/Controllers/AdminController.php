@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AppointmentExport;
+use App\Exports\KmteUserExport;
 use App\Exports\KMTMUser as ExportsKMTMUser;
 use App\Exports\KMTMUserB2C;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
 use App\Models\Exhibitor;
+use App\Models\KmteUser;
 use App\Models\KmtmUser;
 use App\Models\Scan;
 use App\Models\Schedule;
@@ -218,6 +220,32 @@ class AdminController extends Controller
             'theTimes' => $theTimes,
             'sellers' => $sellers,
             'schedules' => $schedules,
+        ]), $filename);
+    }
+    public function kmteUser(Request $request) {
+        $myData = self::me();
+        $filter = [];
+        if ($request->q != "") {
+            array_push($filter, ['name', 'LIKE', '%'.$request->q.'%']);
+        }
+        
+        $users = KmteUser::where($filter)->orderBy('created_at', 'DESC')->paginate(25);
+        $total = KmteUser::get('id')->count();
+
+        return view('admin.kmte_user', [
+            'myData' => $myData,
+            'request' => $request,
+            'users' => $users,
+            'total' => $total,
+        ]);
+    }
+    public function kmteUserExport() {
+        $now = Carbon::now();
+        $users = KmteUser::orderBy('created_at', 'DESC')->get();
+        $filename = "KMTE User - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+
+        return Excel::download(new KmteUserExport([
+            'users' => $users
         ]), $filename);
     }
     public function kmtmUser(Request $request) {
