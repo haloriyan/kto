@@ -39,6 +39,7 @@
                 <tr>
                     <th>Tanggal</th>
                     <th>Jam</th>
+                    <th>Tipe</th>
                     <th></th>
                 </tr>
             </thead>
@@ -47,6 +48,7 @@
                     <tr>
                         <td>{{ Carbon::parse($item->date)->isoFormat('D MMMM') }}</td>
                         <td>{{ Carbon::parse($item->date)->isoFormat('HH:mm') }}</td>
+                        <td>{{ strtoupper($item->type) }}</td>
                         <td>
                             <button onclick="edit('{{ $item }}')" class="blue small">Edit</button>
                             <button onclick="del('{{ $item }}')" class="red small">Hapus</button>
@@ -85,7 +87,6 @@
         </div>
         <form action="{{ route('schedule.add') }}" class="modal-content" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
-            <input type="hidden" name="type" value="b2b">
             <div class="flex row gap-20">
                 <div class="flex column grow-1">
                     <div class="group">
@@ -101,6 +102,14 @@
                     </div>
                     <div class="text small muted">JAM:MENIT</div>
                 </div>
+            </div>
+
+            <div class="group">
+                <select name="type" id="type">
+                    <option value="b2b">B2B</option>
+                    <option value="b2c">B2C</option>
+                </select>
+                <label for="type" class="active">Tipe :</label>
             </div>
 
             <button class="primary w-100 mt-2">Submit</button>

@@ -39,7 +39,9 @@
                 >
                 <div class="flex column grow-1">
                     <div class="text bold size-18">{{ BuyerController::payload($data->seller, 'name_en') }}</div>
-                    <div class="text size-14 mt-05"><i class="bx bx-time"></i> {{ Carbon::parse($data->schedule->date)->format('H:i') }}</div>
+                    @if ($myData->join_type == "company")
+                        <div class="text size-14 mt-05"><i class="bx bx-time"></i> {{ Carbon::parse($data->schedule->date)->format('H:i') }}</div>
+                    @endif
 
                     @if (Carbon::parse(env('MAX_CANCEL_APPOINTMENT'))->diffInMinutes() > 0)
                         <div class="text primary mt-05 pointer" onclick="cancel('{{ $data }}')">
@@ -49,6 +51,10 @@
                 </div>
             </div>
         @endforeach
+    @endif
+
+    @if ($appointments->count() > 0)
+        <div class="mt-2 text size-14">You can visit our sellers at anytime between 15.30 - 17.10</div>
     @endif
 
     @if (($appointments->count() < 6 && $myData->join_type == "company") || $myData->join_type == "personal")

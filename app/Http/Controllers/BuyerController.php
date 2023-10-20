@@ -82,6 +82,7 @@ class BuyerController extends Controller
         }
 
         if ($request->exid != null && $request->schedule_id != null) {
+            // b2b
             $check = Appointment::where([
                 ['seller_id', $request->exid],
                 ['schedule_id', $request->schedule_id]
@@ -99,6 +100,22 @@ class BuyerController extends Controller
                 return redirect()->route('visitor.makeAppointment', ['exid' => $request->exid])->withErrors([
                     'Maaf, jadwal yang Anda inginkan telah dipilih orang lain. Mohon pilih jadwal lainnya'
                 ]);
+            }
+        }
+        if ($request->exid != null && $myData->join_type == "personal") {
+            // b2c
+            $check = Appointment::where([
+                ['seller_id', $request->exid],
+                ['buyer_id', $myData->id]
+            ])->get('id');
+
+            if ($check->count() == 0) {
+                $saveAppointment = Appointment::create([
+                    'seller_id' => $request->exid,
+                    'buyer_id' => $myData->id
+                ]);
+
+                return redirect()->route('kmtm.home');
             }
         }
 

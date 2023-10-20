@@ -203,10 +203,19 @@ class AdminController extends Controller
         $appointments = Appointment::with(['buyer', 'seller.payloads'])->get();
         $filename = "KMTM Appointments - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
         $sellers = Seller::orderBy('name', 'ASC')->with(['appointments.buyer'])->get();
-        $schedules = Schedule::orderBy('date', 'ASC')->with('appointments')->get();
+        $schedules = Schedule::orderBy('date', 'ASC')->get();
+
+        $theTimes = [];
+        foreach ($schedules as $schedule) {
+            array_push(
+                $theTimes,
+                Carbon::parse($schedule->date)->format('H:i')
+            );
+        }
 
         return Excel::download(new AppointmentExport([
             'appointments' => $appointments,
+            'theTimes' => $theTimes,
             'sellers' => $sellers,
             'schedules' => $schedules,
         ]), $filename);

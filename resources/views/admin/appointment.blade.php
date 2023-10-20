@@ -57,9 +57,9 @@
         </tbody>
     </table>
 
-    <div class="mt-3">
+    {{-- <div class="mt-3">
         {{ $appointments->links('pagination::bootstrap-4') }}
-    </div>
+    </div> --}}
 
 </div>
 @endsection

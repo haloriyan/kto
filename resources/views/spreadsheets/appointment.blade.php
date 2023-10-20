@@ -15,14 +15,10 @@
         @foreach ($sellers as $seller)
             <tr>
                 <td>{{ $seller->name }}</td>
-                @foreach ($schedules as $schedule)
-                    @foreach ($schedule->appointments as $item)
-                        @if ($item->seller_id == $seller->id)
-                            <td>
-                                {{ $item->buyer->name }}
-                            </td>
-                        @else
-                            <td></td>
+                @foreach ($times as $time)
+                    @foreach ($seller->appointments as $item)
+                        @if (Carbon::parse($item->schedule->date)->format('H:i') == $time)
+                            <td>{{ $item->buyer->name }}</td>
                         @endif
                     @endforeach
                 @endforeach
