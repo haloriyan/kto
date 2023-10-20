@@ -115,6 +115,7 @@ class BuyerController extends Controller
         return view('buyer.makeAppointment', [
             'sellers' => $sellers,
             'seller' => $seller,
+            'myData' => $myData,
             'request' => $request,
         ]);
     }

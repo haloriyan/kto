@@ -47,10 +47,14 @@
         <div class="text">@lang('appointment_description_b') {{ $seller->name }}</div>
         <div id="renderSchedule" class="flex column gap-20 mt-2"></div>
     @endif
+
+    <input type="hidden" id="myData" value="{{ $myData }}">
 </div>
 
+<script src="{{ asset('js/base.js') }}"></script>
 <script>
     let isGettingSchedule = "{{ $isGettingSchedule }}";
+    let myData = JSON.parse(escapeJson(select("#myData").value));
     let schedules = [];
     let exhibitorID = document.querySelector("#exhibitor_id").value;
     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -76,6 +80,7 @@
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 seller_id: exhibitorID,
+                buyer_id: myData.id
             })
         })
         .then(res => res.json())

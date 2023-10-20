@@ -64,7 +64,6 @@
             el.innerHTML = `<div class="flex grow-1 text size-18 bold">${dt.getDate()} ${months[dt.getMonth()]}</div>
             <div class="text size-16"><i class="bx bx-time"></i> ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}</div>`;
             parent.appendChild(el);
-            console.log(cok);
         })
     }
     const getSchedules = () => {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Schedule;
@@ -11,6 +12,7 @@ class ScheduleController extends Controller
 {
     public function get(Request $request) {
         $sellerID = $request->seller_id;
+        $buyerID = $request->buyer_id;
         $schedulesRaw = Schedule::orderBy('date', 'ASC')->get();
         $schedules = [];
 
@@ -18,7 +20,12 @@ class ScheduleController extends Controller
             $appointments = Appointment::where([
                 ['seller_id', $sellerID],
                 ['schedule_id', $schedule->id]
-            ])->get('id');
+            ])
+            ->orWhere([
+                ['buyer_id', $buyerID],
+                ['schedule_id', $schedule->id]
+            ])
+            ->get('id');
 
             if ($appointments->count() == 0) {
                 // array_splice($schedules, $i, 1);
