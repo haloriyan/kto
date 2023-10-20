@@ -10,6 +10,6 @@ class KmteUser extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'phone', 'eligible', 'referer'
+        'name', 'email', 'phone', 'eligible', 'referer', 'website'
     ];
 }

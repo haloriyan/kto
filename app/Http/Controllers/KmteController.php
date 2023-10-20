@@ -24,6 +24,7 @@ class KmteController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'website' => $request->website,
                 'eligible' => $eligible,
                 'referer' => $request->referer,
             ]);

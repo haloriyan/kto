@@ -7,15 +7,19 @@
     {{ csrf_field() }}
     <div class="group">
         <input type="text" id="name" name="name" required>
-        <label for="name">@lang('name') :</label>
+        <label class="active" for="name">@lang('name') :</label>
     </div>
     <div class="group">
         <input type="text" id="email" name="email" required>
-        <label for="email">Email :</label>
+        <label class="active" for="email">Email :</label>
     </div>
     <div class="group">
         <input type="text" id="phone" name="phone" required>
-        <label for="phone">@lang('phone') :</label>
+        <label class="active" for="phone">@lang('phone') :</label>
+    </div>
+    <div class="group">
+        <input type="text" id="website" name="website" placeholder="Facebook, Instagram link, etc" required>
+        <label class="active" for="website">Website / SNS Profile URL :</label>
     </div>
     <div class="group">
         <input type="text" id="referer" name="referer">
