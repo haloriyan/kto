@@ -50,16 +50,18 @@
                     </td>
                     <td>{{ $item->seller->name }}</td>
                     <td>
-                        {{ Carbon::parse($item->schedule->date)->format('d M - H:i') }}
+                        @if ($item->buyer->join_type == "company")
+                            {{ Carbon::parse($item->schedule->date)->format('d M - H:i') }}
+                        @endif
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    {{-- <div class="mt-3">
+    <div class="mt-3">
         {{ $appointments->links('pagination::bootstrap-4') }}
-    </div> --}}
+    </div>
 
 </div>
 @endsection
