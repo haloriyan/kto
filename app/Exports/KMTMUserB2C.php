@@ -2,16 +2,12 @@
 
 namespace App\Exports;
 
-use App\Models\KmtmUser as ModelsKmtmUser;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class KMTMUser implements FromView, ShouldAutoSize
+class KMTMUserB2C implements FromView, ShouldAutoSize
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
     public $users;
     public $columns;
 
@@ -22,7 +18,7 @@ class KMTMUser implements FromView, ShouldAutoSize
     }
     public function view(): View
     {
-        return view('spreadsheets.kmtm_user', [
+        return view('spreadsheets.kmtm_user_b2c', [
             'users' => $this->users,
             'columns' => $this->columns,
         ]);

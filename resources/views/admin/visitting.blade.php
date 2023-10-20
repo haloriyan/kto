@@ -3,7 +3,7 @@
     use Carbon\Carbon;
 @endphp
 
-@section('title', "Kunjungan Booth")
+@section('title', "Kunjungan Booth (Scan)")
     
 @section('content')
 <div class="bg-white p-4 rounded-more shadow">

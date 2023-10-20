@@ -27,9 +27,14 @@
             </div>
         </form>
     </div>
-    <a href="{{ route('admin.kmtmUser.export') }}" class="flex justify-end">
-        <button class="green small">Download Excel</button>
-    </a>
+    <div class="flex row item-center gap-20 justify-end mb-2">
+        <a href="{{ route('admin.kmtmUser.export', ['type' => 'b2b']) }}" class="flex justify-end">
+            <button class="green small">Download B2B Data</button>
+        </a>
+        <a href="{{ route('admin.kmtmUser.export', ['type' => 'b2c']) }}" class="flex justify-end">
+            <button class="green small">Download B2C Data</button>
+        </a>
+    </div>
 
     <table>
         <thead>

@@ -26,8 +26,11 @@ Route::group(['prefix' => "kmtm"], function () {
     });
     Route::get('login', "BuyerController@loginPage")->name('kmtm.loginPage');
     Route::post('login', "BuyerController@login")->name('kmtm.login');
-    Route::get('home', "BuyerController@home")->name('kmtm.home');
-    Route::get('make-appointment', "BuyerController@makeAppointment")->name('kmtm.makeAppointment');
+    Route::group(['middleware' => "Kmtm"], function () {
+        Route::get('home', "BuyerController@home")->name('kmtm.home');
+        Route::get('make-appointment', "BuyerController@makeAppointment")->name('kmtm.makeAppointment');
+        Route::post('cancel-appointment', "BuyerController@cancelAppointment")->name('kmtm.cancel');
+    });
 });
 
 Route::group(['prefix' => "admin"], function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\KMTMUser as ExportsKMTMUser;
+use App\Exports\KMTMUserB2C;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
@@ -178,13 +179,13 @@ class AdminController extends Controller
 
         $query = Appointment::orderBy('created_at', 'DESC');
         if ($request->q != "") {
-            $query = $query->whereHas('exhibitor', function ($q) use ($request) {
+            $query = $query->whereHas('seller', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             })->orWhereHas('visitor', function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
-        $appointments = $query->with(['schedule', 'exhibitor', 'visitor'])->paginate(25);
+        $appointments = $query->with(['schedule', 'seller', 'buyer'])->paginate(25);
         $appointments->appends($request->query());
         $total_data = Appointment::orderBy('created_at', 'DESC')->get('id');
 
@@ -240,10 +241,16 @@ class AdminController extends Controller
             'myData' => $myData,
         ]);
     }
-    public function kmtmUserExport() {
+    public function kmtmUserExport(Request $request) {
         $now = Carbon::now();
-        $filename = "KMTM User - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
-        $users = KmtmUser::orderBy('created_at', 'DESC')->get();
+        
+        if ($request->type == "b2b") {
+            $query = KmtmUser::where('join_type', 'company');
+        } else {
+            $query = KmtmUser::where('join_type', 'personal');
+        }
+
+        $users = $query->orderBy('created_at', 'DESC')->get();
         $customFieldColumns = [];
 
         foreach ($users as $user) {
@@ -253,10 +260,19 @@ class AdminController extends Controller
         }
         $customFieldColumns = json_decode($customFieldColumns, false);
         
-        return Excel::download(new ExportsKMTMUser([
-            'users' => $users,
-            'field_columns' => $customFieldColumns
-        ]), $filename);
+        if ($request->type == "b2b") {
+            $filename = "KMTM User (B2B) - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+            return Excel::download(new ExportsKMTMUser([
+                'users' => $users,
+                'field_columns' => $customFieldColumns
+            ]), $filename);
+        } else {
+            $filename = "KMTM User (B2C) - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+            return Excel::download(new KMTMUserB2C([
+                'users' => $users,
+                'field_columns' => $customFieldColumns
+            ]), $filename);
+        }
     }
     public function claim(Request $request) {
         $myData = self::me();

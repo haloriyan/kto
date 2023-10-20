@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('line_of_business')->nullable()->after('from_company');
             $table->string('company_established')->nullable()->after('line_of_business');
             $table->longText('interesting_sellers')->nullable()->after('company_established');
+            $table->integer('cancellation_count')->after('has_notified');
         });
     }
 

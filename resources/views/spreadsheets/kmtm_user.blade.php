@@ -1,7 +1,7 @@
 <table>
     <thead>
         <tr>
-            <th colspan="6" style="background-color: #dedede;text-align: center;"><span style="color: #fff;">KMTM Buyer</span></th>
+            <th colspan="6" style="background-color: #dedede;text-align: center;"><span style="color: #fff;">KMTM Buyer (B2B)</span></th>
         </tr>
         <tr>
             <th style="font-weight: bold;">Name</th>

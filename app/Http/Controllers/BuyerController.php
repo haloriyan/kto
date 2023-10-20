@@ -63,6 +63,13 @@ class BuyerController extends Controller
         $myData = self::me();
         $sellers = [];
         $sellersRaw = Seller::orderBy('name', 'ASC')->with(['payloads'])->get();
+        $appointments = Appointment::where('buyer_id', $myData->id)->get('id');
+
+        if (($appointments->count() < 6 && $myData->join_type == "company") || $myData->join_type == "personal") {
+            // 
+        } else {
+            return redirect()->route('kmtm.home');
+        }
 
         foreach ($sellersRaw as $raw) {
             $check = Appointment::where([
@@ -109,6 +116,16 @@ class BuyerController extends Controller
             'sellers' => $sellers,
             'seller' => $seller,
             'request' => $request,
+        ]);
+    }
+    public function cancelAppointment(Request $request) {
+        $data = Appointment::where('id', $request->id);
+        $appointment = $data->first();
+        $query = KmtmUser::where('id', $appointment->buyer_id)->increment('cancellation_count');
+        $data->delete();
+
+        return redirect()->route('kmtm.home')->with([
+            'message' => ""
         ]);
     }
 }

@@ -30,15 +30,15 @@
         <thead>
             <tr>
                 <th>Nama Peserta</th>
-                <th>Exhibitor</th>
+                <th>Seller</th>
                 <th>Jadwal</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($appointments as $item)
                 <tr>
-                    <td>{{ $item->visitor->name }}</td>
-                    <td>{{ $item->exhibitor->name }}</td>
+                    <td>{{ $item->buyer->name }}</td>
+                    <td>{{ $item->seller->name }}</td>
                     <td>
                         {{ Carbon::parse($item->schedule->date)->format('d M - H:i') }}
                     </td>

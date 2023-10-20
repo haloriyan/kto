@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/base/button.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/font.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/base/modal.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -23,6 +24,8 @@
     @php
         use \App\Http\Controllers\BuyerController;
         use Carbon\Carbon;
+
+        $now = Carbon::now();
     @endphp
 
     @if ($appointments->count() == 0)
@@ -37,15 +40,55 @@
                 <div class="flex column grow-1">
                     <div class="text bold size-18">{{ BuyerController::payload($data->seller, 'name_en') }}</div>
                     <div class="text size-14 mt-05"><i class="bx bx-time"></i> {{ Carbon::parse($data->schedule->date)->format('H:i') }}</div>
+
+                    @if (Carbon::parse(env('MAX_CANCEL_APPOINTMENT'))->diffInMinutes() > 0)
+                        <div class="text primary mt-05 pointer" onclick="cancel('{{ $data }}')">
+                            cancel
+                        </div>
+                    @endif
                 </div>
             </div>
         @endforeach
     @endif
 
-    <a href="{{ route('kmtm.makeAppointment') }}">
-        <button class="mt-2 primary w-100">@lang('kmtm_home_button')</button>
-    </a>
+    @if (($appointments->count() < 6 && $myData->join_type == "company") || $myData->join_type == "personal")
+        <a href="{{ route('kmtm.makeAppointment') }}">
+            <button class="mt-2 primary w-100">@lang('kmtm_home_button')</button>
+        </a>
+    @endif
 </div>
+
+<div class="modal" id="cancelModal">
+    <div class="modal-body">
+        <div class="modal-title">
+            Cancel Appointment
+            <span class="bx bx-x modal-close" hide></span>
+        </div>
+        <form action="{{ route('kmtm.cancel') }}" class="modal-content" method="POST">
+            {{ csrf_field() }}
+            <input type="hidden" id="id" name="id">
+            <div>
+                Are you sure want to cancel your appointment with <span id="seller_name"></span>?
+                You will have {{ 6 - $myData->cancellation_count }} chance(s) to cancel your appointment
+            </div>
+
+            <button class="primary w-100 mt-3">
+                Yes, Cancel My Appointment
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ asset('js/base.js') }}"></script>
+<script>
+    const cancel = data => {
+        data = JSON.parse(data);
+        console.log(data);
+        modal("#cancelModal").show();
+        select("#seller_name").innerHTML = data.seller.name;
+        select("#cancelModal #id").value = data.id;
+    }
+</script>
 
 </body>
 </html>

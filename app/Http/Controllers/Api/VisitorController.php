@@ -93,7 +93,8 @@ class VisitorController extends Controller
                 'eligible' => false,
                 'has_notified' => false,
                 'custom_field' => $answers,
-                'interesting_sellers' => $sellers
+                'interesting_sellers' => $sellers,
+                'cancellation_count' => 0,
             ]);
             $message = $lang == "en" ? 
                 "Thank you for joining KMTM. Please wait for data verification and we will reach you soon." : 

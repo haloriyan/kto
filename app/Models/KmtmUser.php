@@ -12,6 +12,6 @@ class KmtmUser extends Authenticatable
 
     protected $fillable = [
         'name', 'email', 'phone', 'website', 'join_type', 'reference', 'from_company', 'line_of_business', 'company_established',
-        'custom_field', 'eligible', 'has_notified', 'interesting_sellers'
+        'custom_field', 'eligible', 'has_notified', 'interesting_sellers', 'cancellation_count'
     ];
 }

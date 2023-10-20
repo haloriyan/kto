@@ -17,7 +17,8 @@
     @if ($errors->count() > 0)
         @foreach ($errors->all() as $err)
             <div class="bg-red p-1 pl-2 pr-2 rounded mt-2">
-                @lang($err)
+                {{-- @lang($err) --}}
+                {{ $err }}
             </div>
         @endforeach
     @endif
