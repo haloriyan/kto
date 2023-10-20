@@ -203,15 +203,13 @@ class AdminController extends Controller
         $appointments = Appointment::with(['buyer', 'seller.payloads'])->get();
         $filename = "KMTM Appointments - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
         $sellers = Seller::orderBy('name', 'ASC')->with(['appointments.buyer'])->get();
-        $schedules = Schedule::orderBy('date', 'ASC')->get();
+        $schedules = Schedule::orderBy('date', 'ASC')->with('appointments')->get();
 
         return Excel::download(new AppointmentExport([
             'appointments' => $appointments,
             'sellers' => $sellers,
             'schedules' => $schedules,
         ]), $filename);
-
-        return $appointments;
     }
     public function kmtmUser(Request $request) {
         $myData = self::me();
