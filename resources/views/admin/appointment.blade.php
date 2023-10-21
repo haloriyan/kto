@@ -42,19 +42,21 @@
         </thead>
         <tbody>
             @foreach ($appointments as $item)
-                <tr>
-                    <td>{{ $item->buyer->name }}
-                        @if ($item->buyer->join_type == "company")
-                            ({{ $item->buyer->from_company }})
-                        @endif
-                    </td>
-                    <td>{{ $item->seller->name }}</td>
-                    <td>
-                        @if ($item->buyer->join_type == "company")
-                            {{ Carbon::parse($item->schedule->date)->format('d M - H:i') }}
-                        @endif
-                    </td>
-                </tr>
+                @if ($item->buyer_id != null)
+                    <tr>
+                        <td>{{ $item->buyer->name }}
+                            @if ($item->buyer->join_type == "company")
+                                ({{ $item->buyer->from_company }})
+                            @endif
+                        </td>
+                        <td>{{ $item->seller->name }}</td>
+                        <td>
+                            @if ($item->buyer->join_type == "company")
+                                {{ Carbon::parse($item->schedule->date)->format('d M - H:i') }}
+                            @endif
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
