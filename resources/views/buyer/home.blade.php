@@ -88,8 +88,7 @@
 <script src="{{ asset('js/base.js') }}"></script>
 <script>
     const cancel = data => {
-        data = JSON.parse(data);
-        console.log(data);
+        data = JSON.parse(escapeJson(data));
         modal("#cancelModal").show();
         select("#seller_name").innerHTML = data.seller.name;
         select("#cancelModal #id").value = data.id;
