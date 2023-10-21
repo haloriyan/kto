@@ -61,18 +61,22 @@
 
     const renderSchedules = () => {
         let parent = document.querySelector("#renderSchedule");
-        parent.innerHTML = "";
-        schedules.forEach(schedule => {
-            let dt = new Date(schedule.date);
-            let endpoint = `{{ route('kmtm.makeAppointment', ['exid' => $seller->id]) }}&schedule_id=${schedule.id}`
-            
-            let el = document.createElement('a');
-            el.setAttribute('href', endpoint)
-            el.classList.add('flex', 'row', 'item-center', 'gap-20', 'border', 'p-2', 'text', 'black');
-            el.innerHTML = `<div class="flex grow-1 text size-18 bold">${dt.getDate()} ${months[dt.getMonth()]}</div>
-            <div class="text size-16"><i class="bx bx-time"></i> ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}</div>`;
-            parent.appendChild(el);
-        })
+        if (schedules.length > 0) {
+            parent.innerHTML = "";
+            schedules.forEach(schedule => {
+                let dt = new Date(schedule.date);
+                let endpoint = `{{ route('kmtm.makeAppointment', ['exid' => $seller->id]) }}&schedule_id=${schedule.id}`
+                
+                let el = document.createElement('a');
+                el.setAttribute('href', endpoint)
+                el.classList.add('flex', 'row', 'item-center', 'gap-20', 'border', 'p-2', 'text', 'black');
+                el.innerHTML = `<div class="flex grow-1 text size-18 bold">${dt.getDate()} ${months[dt.getMonth()]}</div>
+                <div class="text size-16"><i class="bx bx-time"></i> ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}</div>`;
+                parent.appendChild(el);
+            })
+        } else {
+            parent.innerHTML = "No any schedule available";
+        }
     }
     const getSchedules = () => {
         fetch("{{ route('api.AppointmentSchedule') }}", {
