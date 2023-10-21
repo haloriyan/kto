@@ -44,7 +44,7 @@
                     @endif
 
                     @if (Carbon::parse(env('MAX_CANCEL_APPOINTMENT'))->diffInMinutes() > 0)
-                        <div class="text primary mt-05 pointer" onclick="cancel('{{ $data }}')">
+                        <div class="text primary mt-05 pointer" onclick="cancel('{{ json_encode($data) }}')">
                             cancel
                         </div>
                     @endif

@@ -86,6 +86,7 @@
         .then(res => res.json())
         .then(res => {
             schedules = res.schedules;
+            console.log(schedules);
             renderSchedules()
         })
     }
