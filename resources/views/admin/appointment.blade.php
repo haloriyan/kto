@@ -42,7 +42,7 @@
         </thead>
         <tbody>
             @foreach ($appointments as $item)
-                @if ($item->buyer_id != null)
+                @if ($item->buyer_id != null && $item->schedule_id != null)
                     <tr>
                         <td>{{ $item->buyer->name }}
                             @if ($item->buyer->join_type == "company")
