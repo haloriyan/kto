@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 class ScheduleController extends Controller
 {
     public function get(Request $request) {
-        $sellerID = $request->seller_id;
-        $buyerID = $request->buyer_id;
+        $sellerID = intval($request->seller_id);
+        $buyerID = intval($request->buyer_id);
         $schedulesRaw = Schedule::orderBy('date', 'ASC')->get();
         $schedules = [];
 
