@@ -188,8 +188,8 @@ class AdminController extends Controller
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
-        $appointments = $query->with(['schedule', 'seller', 'buyer'])->paginate(25);
-        $appointments->appends($request->query());
+        $appointments = $query->with(['schedule', 'seller', 'buyer'])->get();
+        // $appointments->appends($request->query());
         $total_data = Appointment::orderBy('created_at', 'DESC')->get('id');
 
         return view('admin.appointment', [
@@ -202,24 +202,36 @@ class AdminController extends Controller
     }
     public function appointmentExport() {
         $now = Carbon::now();
-        $appointments = Appointment::with(['buyer', 'seller.payloads'])->get();
         $filename = "KMTM Appointments - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
-        $sellers = Seller::orderBy('name', 'ASC')->with(['appointments.buyer'])->get();
-        $schedules = Schedule::orderBy('date', 'ASC')->get();
+        $schedulesRaw = Schedule::orderBy('date', 'ASC')->get();
+        $schedules = [];
+        $sellers = Seller::orderBy('name', 'ASC')->get();
 
-        $theTimes = [];
-        foreach ($schedules as $schedule) {
-            array_push(
-                $theTimes,
-                Carbon::parse($schedule->date)->format('H:i')
-            );
+        foreach ($schedulesRaw as $s) {
+            array_push($schedules, Carbon::parse($s->date)->format('H:i'));
+        }
+
+        foreach ($sellers as $i => $seller) {
+            $appointments = [];
+            foreach ($schedulesRaw as $schedule) {
+                $app = Appointment::where([
+                    ['seller_id', $seller->id],
+                    ['schedule_id', $schedule->id]
+                ])->with(['buyer', 'schedule'])->first();
+
+                if ($app != null && $app->schedule->date == $schedule->date) {
+                    array_push($appointments, $app);
+                } else {
+                    array_push($appointments, null);
+                }
+            }
+            $sellers[$i]['appointments'] = $appointments;
         }
 
         return Excel::download(new AppointmentExport([
-            'appointments' => $appointments,
-            'theTimes' => $theTimes,
-            'sellers' => $sellers,
             'schedules' => $schedules,
+            'schedulesRaw' => $schedulesRaw,
+            'sellers' => $sellers
         ]), $filename);
     }
     public function kmteUser(Request $request) {

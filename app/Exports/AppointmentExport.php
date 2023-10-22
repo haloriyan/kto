@@ -15,10 +15,8 @@ class AppointmentExport implements FromView, ShouldAutoSize
 
     public function __construct($props)
     {
-        $this->appointments = $props['appointments'];
         $this->sellers = $props['sellers'];
         $this->schedules = $props['schedules'];
-        $this->times = $props['theTimes'];
     }
     /**
     * @return \Illuminate\Support\Collection
@@ -26,9 +24,7 @@ class AppointmentExport implements FromView, ShouldAutoSize
     public function view(): View
     {
         return view('spreadsheets.appointment', [
-            'appointments' => $this->appointments,
             'sellers' => $this->sellers,
-            'times' => $this->times,
             'schedules' => $this->schedules,
         ]);
     }
