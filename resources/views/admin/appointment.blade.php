@@ -62,7 +62,7 @@
     </table>
 
     <div class="mt-3">
-        {{-- {{ $appointments->links('pagination::bootstrap-4') }} --}}
+        {{ $appointments->links('pagination::bootstrap-4') }}
     </div>
 
 </div>
