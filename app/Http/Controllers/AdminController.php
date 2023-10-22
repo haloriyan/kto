@@ -219,7 +219,7 @@ class AdminController extends Controller
                     ['schedule_id', $schedule->id]
                 ])->with(['buyer', 'schedule'])->first();
 
-                if ($app != null && $app->schedule->date == $schedule->date) {
+                if ($app != null && $app->buyer_id != null && $app->schedule->date == $schedule->date) {
                     array_push($appointments, $app);
                 } else {
                     array_push($appointments, null);
