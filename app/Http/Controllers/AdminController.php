@@ -188,8 +188,8 @@ class AdminController extends Controller
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
-        $appointments = $query->with(['schedule', 'seller', 'buyer'])->get();
-        // $appointments->appends($request->query());
+        $appointments = $query->with(['schedule', 'seller', 'buyer'])->paginate(25);
+        $appointments->appends($request->query());
         $total_data = Appointment::orderBy('created_at', 'DESC')->get('id');
 
         return view('admin.appointment', [
