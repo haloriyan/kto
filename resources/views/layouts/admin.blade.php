@@ -55,7 +55,7 @@
     </a> --}}
     <a href="{{ route('admin.schedule') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.schedule' ? 'active' : 'black' }}">
         <i class="bx bx-calendar"></i>
-        <div class="flex grow-1">Jadwal Appointment</div>
+        <div class="flex grow-1">Appointment</div>
         <i class="bx bx-chevron-right"></i>
     </a>
     <a href="{{ route('admin.admin') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.admin' ? 'active' : 'black' }}">
@@ -65,7 +65,7 @@
     </a>
     <a href="{{ route('admin.settings') }}" class="MenuItem flex row gap-20 item-center pl-2 pr-2 h-50 text {{ $routeName == 'admin.settings' ? 'active' : 'black' }}">
         <i class="bx bx-cog"></i>
-        <div class="flex grow-1">Pengaturan</div>
+        <div class="flex grow-1">Settings</div>
         <i class="bx bx-chevron-right"></i>
     </a>
 
