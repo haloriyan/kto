@@ -1,0 +1,13 @@
+.ProgressArea {
+    background-color: #eee;
+    width: 100%;
+    height: 10px;
+}
+.Steps {
+    background-color: var(--primary);
+    width: 16%;
+    height: 10px;
+}
+.Steps.Initial {
+    width: 4%;
+}

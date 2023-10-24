@@ -173,7 +173,7 @@ button.primary:hover { background-color: var(--primaryDark); }
 .border.right { border: none;border-right: 1px solid #ddd; }
 .border.right-2 { border: none;border-right: 2px solid #ddd; }
 
-.border.primary { border-color: #ddd; }
+.border.primary { border-color: var(--primary); }
 .border.primary.transparent { border-color: var(--primaryTransparent); }
 .border.red { border-color: var(--red); }
 .border.green { border-color: var(--green); }

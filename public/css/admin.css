@@ -8,6 +8,7 @@ body {
 .LeftMenu {
     left: -50%;
     transition: 0.4s;
+    overflow: auto;
 }
 .LeftMenu.active {
     left: 0px;

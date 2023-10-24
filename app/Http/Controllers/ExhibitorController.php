@@ -62,6 +62,7 @@ class ExhibitorController extends Controller
 
         // generating qr
         $str = route('boothScan', $exhibitor->unique_id);
+        return $str;
         $qrCode = QrCode::size(150)->generate($str);
 
         $pdf = Pdf::loadView('pdf.ExhibitorQR', [

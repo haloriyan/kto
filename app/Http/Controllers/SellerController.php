@@ -120,7 +120,7 @@ class SellerController extends Controller
     public function qr($id) {
         $seller = Seller::where('id', $id)->with('payloads')->first();
 
-        $str = route('boothScan', base64_encode($seller->id));
+        $str = route('boothScan', $seller->unique_id);
         $qrCode = QrCode::size(150)->generate($str);
 
         $pdf = Pdf::loadView('pdf.ExhibitorQR', [

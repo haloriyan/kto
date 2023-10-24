@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', "Mystery Gift Claim")
+@section('title', "Exclusive Gift Claim")
     
 @section('content')
 @if ($message != "")
@@ -12,19 +12,19 @@
 <div class="bg-white rounded p-4 border">
     <div class="flex row item-center justify-end gap-20">
         <div class="flex row grow-1 border primary rounded p-05 gap-10">
-            <div class="bg-primary rounded flex grow-1 h-40 centerize">
+            <a href="{{ route('admin.claim') }}" class="flex grow-1 text primary h-40 centerize">
                 Mystery Gift Claim
-            </div>
-            <a href="{{ route('admin.exclusiveGift.claim') }}" class="flex grow-1 text primary h-40 centerize">
-                Exclusive Gift Claim
             </a>
+            <div class="bg-primary rounded flex grow-1 h-40 centerize">
+                Exclusive Gift Claim
+            </div>
         </div>
         <form>
             <div class="group">
                 <input type="text" id="search" name="q" value="{{ $request->q }}">
                 <label for="search">Cari :</label>
                 @if ($request->q != "")
-                    <a href="{{ route('admin.claim') }}" class="text red absolute right-5 top-0 mt-3 pointer">
+                    <a href="{{ route('admin.exclusiveGift.claim') }}" class="text red absolute right-5 top-0 mt-3 pointer">
                         <i class="bx bx-x"></i>
                     </a>
                 @endif
@@ -44,7 +44,7 @@
                     <td>{{ $item->visitor->name }} <div class="text muted small">({{ $item->visitor->email }})</div></td>
                     <td>
                         @if (!$item->is_accepted)
-                            <a href="{{ route('admin.claim.accept', $item->id) }}">
+                            <a href="{{ route('admin.exclusiveGift.claim.accept', $item->id) }}">
                                 <button class="green small">
                                     <i class="bx bx-check"></i>
                                 </button>

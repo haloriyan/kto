@@ -6,18 +6,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('auth/{token?}/{redirectTo?}', "VisitorController@auth")->name('visitor.authorize');
-Route::get('login', "VisitorController@loginPage")->name('visitor.loginPage');
-Route::get('register', "VisitorController@registerPage")->name('visitor.registerPage');
-Route::post('login', "VisitorController@login")->name('visitor.login');
-Route::post('register', "VisitorController@register")->name('visitor.register');
-Route::get('logout', "VisitorController@logout")->name('visitor.logout');
+Route::group(['prefix' => "visitor"], function () {
+    Route::get('auth/{token?}/{redirectTo?}', "VisitorController@auth")->name('visitor.authorize');
+    Route::get('login', "VisitorController@loginPage")->name('visitor.loginPage');
+    Route::get('register', "VisitorController@registerPage")->name('visitor.registerPage');
+    Route::post('login', "VisitorController@login")->name('visitor.login');
+    Route::post('register', "VisitorController@register")->name('visitor.register');
+    Route::get('logout', "VisitorController@logout")->name('visitor.logout');
+    Route::get('/', function () {
+        return redirect()->route('visitor.loginPage');
+    });
+});
 
 Route::get('switch-lang/{lang}', "VisitorController@switchLang")->name('switchLang');
 
 Route::group(['middleware' => "Visitor"], function () {
     Route::get('home', "VisitorController@history")->name('visitor.home');
     Route::get('claim', "VisitorController@claim")->name('visitor.claim');
+    Route::get('exclusive/claim', "VisitorController@claimExclusiveGift")->name('visitor.claimExclusiveGift');
 });
 
 Route::group(['prefix' => "kmtm"], function () {
@@ -94,6 +100,7 @@ Route::group(['prefix' => "admin"], function () {
             Route::get('create', "SellerController@create")->name('seller.create');
             Route::get('/{id}/edit', "SellerController@edit")->name('seller.edit');
             Route::get('update-db', "SellerController@updateDb");
+            Route::get('regenerate', "AdminController@regenerateSellerQR")->name('admin.seller.regenerate');
             Route::get('/', "AdminController@seller")->name('admin.seller');
             Route::get('{id}/qr', "SellerController@qr")->name('seller.qr');
         });
@@ -114,6 +121,10 @@ Route::group(['prefix' => "admin"], function () {
         Route::group(['prefix' => "claim"], function () {
             Route::get('/', "AdminController@claim")->name('admin.claim');
             Route::get('/{id}/accept', "AdminController@acceptClaim")->name('admin.claim.accept');
+        });
+        Route::group(['prefix' => "exclusive-claim"], function () {
+            Route::get('/', "AdminController@exclusiveClaim")->name('admin.exclusiveGift.claim');
+            Route::get('/{id}/accept', "AdminController@acceptExclusiveClaim")->name('admin.exclusiveGift.claim.accept');
         });
     });
 });

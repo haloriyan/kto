@@ -21,4 +21,7 @@ class Visitor extends Authenticatable
     public function claim() {
         return $this->hasOne(Claim::class, 'visitor_id');
     }
+    public function exclusiveClaim() {
+        return $this->hasOne(ExclusiveClaim::class, 'visitor_id');
+    }
 }

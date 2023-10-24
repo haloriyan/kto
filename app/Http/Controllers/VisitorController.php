@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Claim;
+use App\Models\ExclusiveClaim;
 use App\Models\Exhibitor;
 use App\Models\Scan;
 use App\Models\Seller;
@@ -95,7 +96,7 @@ class VisitorController extends Controller
         ]);
     }
     public function boothScan($uniqueID) {
-        $seller = Seller::where('id', base64_decode($uniqueID))->first();
+        $seller = Seller::where('unique_id', $uniqueID)->first();
         $myData = self::me();
 
         $check = Scan::where([
@@ -119,6 +120,8 @@ class VisitorController extends Controller
     }
     public function history() {
         $myData = self::me();
+        $myData->exclusive_claim = ExclusiveClaim::where('visitor_id', $myData->id)->first();
+        $myData->mystery_claim = Claim::where('visitor_id', $myData->id)->first();
         $message = Session::get('message');
 
         $histories = Scan::where('visitor_id', $myData->id)
@@ -129,6 +132,25 @@ class VisitorController extends Controller
             'histories' => $histories,
             'myData' => $myData,
             'message' => $message,
+        ]);
+    }
+    public function claimExclusiveGift() {
+        $myData = self::me();
+        $visits = VisitorScan::where('visitor_id', $myData->id)->get();
+
+        if ($visits->count() >= 1) {
+            $claim = ExclusiveClaim::create([
+                'visitor_id' => $myData->id,
+                'is_accepted' => false,
+            ]);
+        } else {
+            return redirect()->route('visitor.home')->withErrors([
+                'You cannot claim exclusive gift yet'
+            ]);
+        }
+
+        return redirect()->route('visitor.home')->with([
+            'message' => "Successfully submitted your exclusive gift claim. Please go to the KTO's booth to collect your prize"
         ]);
     }
     public function makeAppointment(Request $request) {
@@ -183,12 +205,12 @@ class VisitorController extends Controller
             ]);
         } else {
             return redirect()->route('visitor.home')->withErrors([
-                'Anda belum bisa mengklaim hadiah'
+                'You cannot claim mystery gift yet'
             ]);
         }
 
         return redirect()->route('visitor.home')->with([
-            'message' => "Berhasil mengajukan klaim hadiah. Silahkan ke booth penyelenggara untuk mengambil hadiah Anda"
+            'message' => "Successfully submitted your mystery gift claim. Please go to the KTO's booth to collect your prize"
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use App\Exports\AppointmentExport;
 use App\Exports\KmteUserExport;
 use App\Exports\KMTMUser as ExportsKMTMUser;
@@ -9,6 +10,7 @@ use App\Exports\KMTMUserB2C;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
+use App\Models\ExclusiveClaim;
 use App\Models\Exhibitor;
 use App\Models\KmteUser;
 use App\Models\KmtmUser;
@@ -20,7 +22,6 @@ use App\Models\VisitorScan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
@@ -356,6 +357,25 @@ class AdminController extends Controller
             'claims' => $claims,
         ]);
     }
+    public function exclusiveClaim(Request $request) {
+        $myData = self::me();
+        $message = Session::get('message');
+        $query = ExclusiveClaim::orderBy('created_at', 'DESC');
+        if ($request->q != "") {
+            $query = $query->whereHas('visitor', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+        $claims = $query->with('visitor.visits.exhibitor')->paginate(25);
+        $claims->appends($request->query());
+        
+        return view('admin.exclusiveClaim', [
+            'myData' => $myData,
+            'request' => $request,
+            'message' => $message,
+            'claims' => $claims,
+        ]);
+    }
     public function acceptClaim($id) {
         $data = Claim::where('id', $id);
         $claim = $data->with('visitor')->first();
@@ -365,6 +385,18 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.claim')->with([
+            'message' => "Klaim hadiah berhasil disetujui"
+        ]);
+    }
+    public function acceptExclusiveClaim($id) {
+        $data = ExclusiveClaim::where('id', $id);
+        $claim = $data->with('visitor')->first();
+
+        $data->update([
+            'is_accepted' => true,
+        ]);
+
+        return redirect()->route('admin.exclusiveGift.claim')->with([
             'message' => "Klaim hadiah berhasil disetujui"
         ]);
     }
@@ -487,5 +519,15 @@ class AdminController extends Controller
         }
 
         return $buyers;
+    }
+    public function regenerateSellerQR() {
+        $sellers = Seller::all();
+        foreach ($sellers as $seller) {
+            $code = Str::random(32);
+            Seller::where('id', $seller->id)->update([
+                'unique_id' => $code,
+            ]);
+        }
+        return "ok";
     }
 }
