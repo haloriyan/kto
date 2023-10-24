@@ -40,7 +40,7 @@
                 <div class="flex column grow-1">
                     <div class="text bold size-18">{{ BuyerController::payload($data->seller, 'name_en') }}</div>
                     @if ($myData->join_type == "company")
-                        <div class="text size-14 mt-05"><i class="bx bx-time"></i> {{ Carbon::parse($data->schedule->date)->format('H:i') }}</div>
+                        <div class="text size-14 mt-05"><i class="bx bx-time"></i> {{ $data->schedule_id != null ? Carbon::parse($data->schedule->date)->format('H:i') : '-' }}</div>
                     @endif
 
                     @if (Carbon::parse(env('MAX_CANCEL_APPOINTMENT'))->diffInMinutes() > 0)
