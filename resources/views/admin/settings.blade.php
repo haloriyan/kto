@@ -30,7 +30,7 @@
                 <label for="long">Longitude :</label>
             </div>
             <div class="pointer text primary bold" onclick="getCoordinates()">
-                Get
+                Set Lokasi Terkini
             </div>
         </div>
 

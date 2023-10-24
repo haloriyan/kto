@@ -106,7 +106,7 @@
         @endif
     </div>
 
-    @if ($histories->count() >= 1 && !$myData->has_claim_exclusive_gift)
+    @if ($histories->count() >= 1)
         <button class="small primary" onclick="modal('#giftClaim').show()">Claim</button>
     @endif
     {{-- <div class="flex column grow-1">

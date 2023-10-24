@@ -10,7 +10,7 @@
     <input type="hidden" name="r" id="r" value="{{ $request->r }}">
     <div class="group">
         <input type="text" name="name" id="name" required>
-        <label for="name">Nama :</label>
+        <label for="name">Name :</label>
     </div>
     <div class="group">
         <input type="email" name="email" id="email" required>
@@ -25,10 +25,11 @@
         @endforeach
     @endif
 
-    <button class="primary w-100 mt-2">Berikutnya</button>
+    <button class="primary w-100 mt-2">Next</button>
 </form>
 
-<div id="DistanceTooFar" style="display: none">Anda harus berada dalam lokasi untuk melanjutkan</div>
+<div id="DistanceTooFar" style="display: none">You must be in the location radius to continue.</div>
+<div id="ErrorPerm" style="display: none">You must enable GPS and allow location access to continue.</div>
 @endsection
 
 @section('javascript')
@@ -50,26 +51,30 @@
     const select = dom => document.querySelector(dom);
 
     const getMyLocation = () => {
-        navigator.geolocation.getCurrentPosition(pos => {
-            let lat = pos.coords.latitude;
-            let lng = pos.coords.longitude;
-            console.log(pos.coords);
+        navigator.permissions.query({name: 'geolocation'}).then((result) => {
+            if (result.state === "granted") {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    let lat = pos.coords.latitude;
+                    let lng = pos.coords.longitude;
 
-            let dist = calculate(
-                {lat, lng},
-                {lat: "{{ env('LATITUDE') }}", lng: "{{ env('LONGITUDE') }}"}
-            );
-            let maxDistance = parseInt("{{ env('MAX_DISTANCE') }}");
-            console.log(dist);
-            if (dist > maxDistance) {
-                select("form#LoginForm").remove();
-                select("#DistanceTooFar").style.display = "block";
+                    let dist = calculate(
+                        {lat, lng},
+                        {lat: "{{ env('LATITUDE') }}", lng: "{{ env('LONGITUDE') }}"}
+                    );
+                    let maxDistance = parseInt("{{ env('MAX_DISTANCE') }}");
+                    if (dist > maxDistance) {
+                        select("form#LoginForm").remove();
+                        select("#DistanceTooFar").style.display = "block";
+                    } else {
+                        select("#LoginForm").style.display = "block";
+                    }
+                }, null, {
+                    enableHighAccuracy: false
+                })
             } else {
-                select("#LoginForm").style.display = "block";
+                select("#ErrorPerm").style.display = "block";
             }
-        }, null, {
-            enableHighAccuracy: false
-        })
+        });
     }
 
     let r = select("#r").value;
@@ -112,7 +117,6 @@
             })
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 if (res.visitor === null) {
                     window.localStorage.removeItem('visitor_token');
                     getMyLocation();
