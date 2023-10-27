@@ -18,7 +18,7 @@ class Visitor extends Authenticatable
     ];
 
     public function visits() {
-        return $this->hasMany(VisitorScan::class, 'visitor_id');
+        return $this->hasMany(Scan::class, 'visitor_id');
     }
 
     public function claim() {

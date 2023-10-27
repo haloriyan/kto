@@ -11,7 +11,6 @@ use App\Models\Seller;
 use App\Models\TechnoClaim;
 use Session;
 use App\Models\Visitor;
-use App\Models\VisitorScan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -138,7 +137,7 @@ class VisitorController extends Controller
     }
     public function claimExclusiveGift() {
         $myData = self::me();
-        $visits = VisitorScan::where('visitor_id', $myData->id)->get();
+        $visits = Scan::where('visitor_id', $myData->id)->get();
 
         if ($visits->count() >= 1) {
             $claim = ExclusiveClaim::create([
@@ -198,7 +197,7 @@ class VisitorController extends Controller
 
     public function claim(Request $request) {
         $myData = self::me();
-        $visits = VisitorScan::where('visitor_id', $myData->id)->get();
+        $visits = Scan::where('visitor_id', $myData->id)->get();
 
         if ($visits->count() >= env('MIN_TO_CLAIM')) {
             $claim = Claim::create([
