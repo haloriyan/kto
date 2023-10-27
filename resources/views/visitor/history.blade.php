@@ -70,7 +70,7 @@
         @foreach ($histories as $item)
             <div class="flex row bg-white border bottom-6 blue transparent pt-2 pb-2 gap-20">
                 <img 
-                    class="h-60 ratio-1-1 rounded bg-grey"
+                    class="h-60 ratio-1-1 rounded bg-grey cover"
                     src="{{ asset('storage/seller_logos/' . $item->seller->logo) }}" 
                     alt="{{ $item->seller->name }}"
                 >
@@ -81,17 +81,9 @@
             </div>
         @endforeach
     @endif
-
-    @if ($histories->count() >= env('MIN_TO_CLAIM'))
-        @if (!$myData->claim()->exists())
-            <a href="{{ route('visitor.claim') }}">
-                <button class="primary mt-3 w-100">Klaim Hadiah</button>
-            </a>
-        @endif
-    @endif
 </div>
 
-<div class="fixed bottom-0 left-0 right-0 flex row item-center gap-20 h-70 shadow pl-2 pr-2">
+<div class="fixed bottom-0 left-0 right-0 flex row item-center gap-20 h-70 shadow pl-2 pr-2 bg-white">
     <div class="flex column grow-1" style="flex-basis: 50%">
         <div class="ProgressArea flex row item-center">
             <div class="Steps Initial"></div>
