@@ -81,6 +81,8 @@
             </div>
         @endforeach
     @endif
+
+    <div style="height: 80px;"></div>
 </div>
 
 <div class="fixed bottom-0 left-0 right-0 flex row item-center gap-20 h-70 shadow pl-2 pr-2 bg-white">
@@ -94,7 +96,11 @@
         @if ($histories->count() == 0)
             <div class="text size-14 muted mt-05">Scan seller's QR to gets exclusive gift</div>
         @else
-            <div class="text size-14 muted mt-05">Scan {{ 6 - $histories->count() }}x more to claim mystery gift</div>
+            @if (6 - $histories->count() == 0)
+                <div class="text size-14 muted mt-05">Claim your mystery gift now!</div>
+            @else
+                <div class="text size-14 muted mt-05">Scan {{ 6 - $histories->count() }}x more to claim mystery gift</div>
+            @endif
         @endif
     </div>
 
