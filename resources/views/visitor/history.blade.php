@@ -154,7 +154,7 @@
                     <div class="text bold size-18">Mystery Gift</div>
                     <div class="text size-12 muted">Scan at any sellers for 5 more times</div>
                 </div>
-                @if ($histories->count() >= 1 && $myData->mystery_claim == null)
+                @if ($histories->count() >= 6 && $myData->mystery_claim == null)
                     <a href="{{ route('visitor.claim') }}">
                         <button class="primary small">Claim</button>
                     </a>
