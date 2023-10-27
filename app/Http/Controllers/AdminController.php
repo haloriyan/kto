@@ -129,7 +129,7 @@ class AdminController extends Controller
     public function visitorDetail($id, Request $request) {
         $myData = self::me();
         $visitor = Visitor::where('id', $id)
-        ->with('visits.exhibitor')
+        ->with('visits.seller')
         ->first();
         
         $names = explode(" ", $visitor->name);
@@ -348,7 +348,7 @@ class AdminController extends Controller
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
-        $claims = $query->with('visitor.visits.exhibitor')->paginate(25);
+        $claims = $query->with('visitor.visits.seller')->paginate(25);
         $claims->appends($request->query());
 
         return view('admin.claim', [
@@ -367,7 +367,7 @@ class AdminController extends Controller
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
-        $claims = $query->with('visitor.visits.exhibitor')->paginate(25);
+        $claims = $query->with('visitor.visits.seller')->paginate(25);
         $claims->appends($request->query());
         
         return view('admin.exclusiveClaim', [
@@ -386,7 +386,7 @@ class AdminController extends Controller
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
-        $claims = $query->with('visitor.visits.exhibitor')->paginate(25);
+        $claims = $query->with('visitor.visits.seller')->paginate(25);
         $claims->appends($request->query());
 
         return view('admin.technoClaim', [
