@@ -11,7 +11,10 @@ class Visitor extends Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'name', 'email', 'password', 'is_active', 'appointment_eligible', 'token'
+        'name', 'email', 'password', 'is_active', 'appointment_eligible', 'token',
+        'has_claim_techno_area',
+        'has_claim_mystery_gift',
+        'has_claim_exclusive_gift'
     ];
 
     public function visits() {

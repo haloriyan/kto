@@ -106,9 +106,7 @@
         @endif
     </div>
 
-    @if ($histories->count() >= 1)
-        <button class="small primary" onclick="modal('#giftClaim').show()">Claim</button>
-    @endif
+    <button class="small primary" onclick="modal('#giftClaim').show()">Claim</button>
     {{-- <div class="flex column grow-1">
         ssdsds
     </div> --}}
@@ -126,7 +124,7 @@
                     <div class="text bold size-18">Techno Area Coupon</div>
                     <div class="text size-12 muted">Get coupon to play on our techno area</div>
                 </div>
-                @if ($myData->has_claim_techno_area)
+                @if ($myData->techno_area != null && $myData->techno_area->is_accepted)
                     <div class="text muted size-14 bold">Claimed</div>
                 @else
                     <button class="primary small" onclick="claim('techno_area')">Claim</button>
@@ -144,7 +142,11 @@
                 @elseif ($histories->count() >= 1 && $myData->exclusive_claim != null && !$myData->exclusive_claim->is_accepted)
                     <div class="text muted size-14 bold">In Progress</div>
                 @else
-                    <div class="text muted size-14 bold">Claimed</div>
+                    @if ($myData->exclusive_claim == null)
+                        <div class="text muted size-14 bold">Not eligible</div>
+                    @else
+                        <div class="text muted size-14 bold">Claimed</div>
+                    @endif
                 @endif
             </div>
             <div class="flex row item-center gap-30 mt-4">
@@ -159,7 +161,11 @@
                 @elseif ($histories->count() >= 1 && $myData->mystery_claim != null && !$myData->mystery_claim->is_accepted)
                     <div class="text muted size-14 bold">In Progress</div>
                 @else
-                    <div class="text muted size-14 bold">Claimed</div>
+                    @if ($myData->mystery_claim == null)
+                        <div class="text muted size-14 bold">Not eligible</div>
+                    @else
+                        <div class="text muted size-14 bold">Claimed</div>
+                    @endif
                 @endif
             </div>
         </div>
@@ -184,7 +190,7 @@
 
 <script src="{{ asset('js/base.js') }}"></script>
 <script>
-    modal('#giftClaim').show();
+    // modal('#giftClaim').show();
 
     const claim = type => {
         modal('#giftClaim').hide();

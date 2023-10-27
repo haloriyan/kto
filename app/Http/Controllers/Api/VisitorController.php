@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Exhibitor;
 use App\Models\KmtmUser;
 use App\Models\Seller;
+use App\Models\TechnoClaim;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -23,6 +24,14 @@ class VisitorController extends Controller
             'is_active' => true,
             'token' => $token,
             'appointment_eligible' => 0,
+            'has_claim_techno_area' => false,
+            'has_claim_exclusive_gift' => false,
+            'has_claim_mystery_gift' => false,
+        ]);
+
+        $technoClaim = TechnoClaim::create([
+            'visitor_id' => $saveData->id,
+            'is_accepted' => false,
         ]);
 
         return $saveData;

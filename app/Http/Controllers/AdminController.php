@@ -17,6 +17,7 @@ use App\Models\KmtmUser;
 use App\Models\Scan;
 use App\Models\Schedule;
 use App\Models\Seller;
+use App\Models\TechnoClaim;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
 use Carbon\Carbon;
@@ -374,6 +375,37 @@ class AdminController extends Controller
             'request' => $request,
             'message' => $message,
             'claims' => $claims,
+        ]);
+    }
+    public function technoClaim(Request $request) {
+        $myData = self::me();
+        $message = Session::get('message');
+        $query = TechnoClaim::orderBy('created_at', 'DESC');
+        if ($request->q != "") {
+            $query = $query->whereHas('visitor', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+        $claims = $query->with('visitor.visits.exhibitor')->paginate(25);
+        $claims->appends($request->query());
+
+        return view('admin.technoClaim', [
+            'myData' => $myData,
+            'request' => $request,
+            'message' => $message,
+            'claims' => $claims,
+        ]);
+    }
+    public function acceptTechnoClaim($id) {
+        $data = TechnoClaim::where('id', $id);
+        $claim = $data->with('visitor')->first();
+
+        $data->update([
+            'is_accepted' => true,
+        ]);
+
+        return redirect()->route('admin.technoGift.claim')->with([
+            'message' => "Klaim kupon berhasil disetujui"
         ]);
     }
     public function acceptClaim($id) {

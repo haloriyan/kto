@@ -126,6 +126,10 @@ Route::group(['prefix' => "admin"], function () {
             Route::get('/', "AdminController@exclusiveClaim")->name('admin.exclusiveGift.claim');
             Route::get('/{id}/accept', "AdminController@acceptExclusiveClaim")->name('admin.exclusiveGift.claim.accept');
         });
+        Route::group(['prefix' => "techno-claim"], function () {
+            Route::get('/', "AdminController@technoClaim")->name('admin.technoGift.claim');
+            Route::get('/{id}/accept', "AdminController@acceptTechnoClaim")->name('admin.technoGift.claim.accept');
+        });
     });
 });
 

@@ -73,6 +73,7 @@
                 })
             } else {
                 select("#ErrorPerm").style.display = "block";
+                alert('no perm')
             }
         });
     }

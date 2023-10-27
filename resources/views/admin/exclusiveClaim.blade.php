@@ -12,12 +12,15 @@
 <div class="bg-white rounded p-4 border">
     <div class="flex row item-center justify-end gap-20">
         <div class="flex row grow-1 border primary rounded p-05 gap-10">
-            <a href="{{ route('admin.claim') }}" class="flex grow-1 text primary h-40 centerize">
-                Mystery Gift Claim
+            <a href="{{ route('admin.technoGift.claim') }}" class="rounded flex grow-1 h-40 centerize text primary">
+                Techno Area Coupon
             </a>
             <div class="bg-primary rounded flex grow-1 h-40 centerize">
                 Exclusive Gift Claim
             </div>
+            <a href="{{ route('admin.claim') }}" class="flex grow-1 text primary h-40 centerize">
+                Mystery Gift Claim
+            </a>
         </div>
         <form>
             <div class="group">

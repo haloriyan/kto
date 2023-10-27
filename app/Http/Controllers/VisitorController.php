@@ -8,6 +8,7 @@ use App\Models\ExclusiveClaim;
 use App\Models\Exhibitor;
 use App\Models\Scan;
 use App\Models\Seller;
+use App\Models\TechnoClaim;
 use Session;
 use App\Models\Visitor;
 use App\Models\VisitorScan;
@@ -122,6 +123,7 @@ class VisitorController extends Controller
         $myData = self::me();
         $myData->exclusive_claim = ExclusiveClaim::where('visitor_id', $myData->id)->first();
         $myData->mystery_claim = Claim::where('visitor_id', $myData->id)->first();
+        $myData->techno_area = TechnoClaim::where('visitor_id', $myData->id)->first();
         $message = Session::get('message');
 
         $histories = Scan::where('visitor_id', $myData->id)
