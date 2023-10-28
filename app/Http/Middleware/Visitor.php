@@ -23,7 +23,7 @@ class Visitor
             return redirect()->route('visitor.loginPage', [
                 'r' => base64_encode($r)
             ])->withErrors([
-                'Anda harus login terlebih dahulu sebelum mengakses halaman ini'
+                'Please register first before continue'
             ]);
         }
         return $next($request);
