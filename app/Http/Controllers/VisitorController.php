@@ -71,7 +71,9 @@ class VisitorController extends Controller
         ]);
     }
     public function logout() {
+        $myData = self::me();
         $loggingOut = Auth::guard('visitor')->logout();
+        $removeToken = Visitor::where('id', $myData->id)->update(['token' => null]);
         return view('visitor.logout');
         // return redirect()->route('visitor.loginPage');
     }
