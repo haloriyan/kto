@@ -127,7 +127,8 @@
                 }
             });
         } else {
-            getMyLocation()
+            // getMyLocation()
+            select("#LoginForm").style.display = "block";
         }
     }
 
