@@ -1,17 +1,19 @@
 <table>
     <thead>
         <tr>
-            <th colspan="3" style="background-color: #dedede;text-align: center;"><span style="color: #fff;">Exclusive Gift Claim</span></th>
+            <th colspan="4" style="background-color: #dedede;text-align: center;"><span style="color: #fff;">Exclusive Gift Claim</span></th>
         </tr>
         <tr>
+            <th style="font-weight: bold;">Name</th>
             <th style="font-weight: bold;">Name</th>
             <th style="font-weight: bold;">Email</th>
             <th style="font-weight: bold;">Status</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($claims as $item)
+        @foreach ($claims as $i => $item)
             <tr>
+                <td>{{ $i + 1 }}</td>
                 <td>{{ $item->visitor->name }}</td>
                 <td>{{ $item->visitor->email }}</td>
                 <td>

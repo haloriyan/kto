@@ -2,15 +2,22 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class TechnoClaimExport implements FromCollection
+class TechnoClaimExport implements FromView, ShouldAutoSize
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public $claims;
+
+    public function __construct($props)
     {
-        //
+        $this->claims = $props['claims'];
+    }
+    public function view(): View
+    {
+        return view('spreadsheets.techno_area', [
+            'claims' => $this->claims,
+        ]);
     }
 }
