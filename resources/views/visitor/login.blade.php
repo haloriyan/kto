@@ -120,7 +120,8 @@
             .then(res => {
                 if (res.visitor === null) {
                     window.localStorage.removeItem('visitor_token');
-                    getMyLocation();
+                    // getMyLocation();
+                    select("#LoginForm").style.display = "block";
                 } else {
                     window.location.href = `{{ route('visitor.authorize') }}/${token}/${redirectTo}`;
                 }
