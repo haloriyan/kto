@@ -120,14 +120,17 @@ Route::group(['prefix' => "admin"], function () {
 
         Route::group(['prefix' => "claim"], function () {
             Route::get('/', "AdminController@claim")->name('admin.claim');
+            Route::get('/export', "AdminController@claimExport")->name('admin.claim.export');
             Route::get('/{id}/accept', "AdminController@acceptClaim")->name('admin.claim.accept');
         });
         Route::group(['prefix' => "exclusive-claim"], function () {
-            Route::get('/', "AdminController@exclusiveClaim")->name('admin.exclusiveGift.claim');
             Route::get('/{id}/accept', "AdminController@acceptExclusiveClaim")->name('admin.exclusiveGift.claim.accept');
+            Route::get('/export', "AdminController@exclusiveClaimExport")->name('admin.exclusiveGift.export');
+            Route::get('/', "AdminController@exclusiveClaim")->name('admin.exclusiveGift.claim');
         });
         Route::group(['prefix' => "techno-claim"], function () {
             Route::get('/', "AdminController@technoClaim")->name('admin.technoGift.claim');
+            Route::get('/export', "AdminController@technoClaimExport")->name('admin.technoGift.export');
             Route::get('/{id}/accept', "AdminController@acceptTechnoClaim")->name('admin.technoGift.claim.accept');
         });
     });

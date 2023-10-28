@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Str;
 use App\Exports\AppointmentExport;
+use App\Exports\ExclusiveClaimExport;
 use App\Exports\KmteUserExport;
 use App\Exports\KMTMUser as ExportsKMTMUser;
 use App\Exports\KMTMUserB2C;
+use App\Exports\MysteryClaimExport;
+use App\Exports\TechnoClaimExport;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
@@ -358,6 +361,15 @@ class AdminController extends Controller
             'claims' => $claims,
         ]);
     }
+    public function claimExport() {
+        $now = Carbon::now();
+        $filename = "Mystery Gift Claim Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+        $claims = Claim::orderBy('created_at', 'DESC')->with('visitor')->get();
+
+        return Excel::download(new MysteryClaimExport([
+            'claims' => $claims,
+        ]), $filename);
+    }
     public function exclusiveClaim(Request $request) {
         $myData = self::me();
         $message = Session::get('message');
@@ -377,6 +389,15 @@ class AdminController extends Controller
             'claims' => $claims,
         ]);
     }
+    public function exclusiveClaimExport() {
+        $now = Carbon::now();
+        $filename = "Exclusive Gift Claim Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+        $claims = ExclusiveClaim::orderBy('created_at', 'DESC')->with('visitor')->get();
+
+        return Excel::download(new ExclusiveClaimExport([
+            'claims' => $claims,
+        ]), $filename);
+    }
     public function technoClaim(Request $request) {
         $myData = self::me();
         $message = Session::get('message');
@@ -395,6 +416,15 @@ class AdminController extends Controller
             'message' => $message,
             'claims' => $claims,
         ]);
+    }
+    public function technoClaimExport() {
+        $now = Carbon::now();
+        $filename = "Techno Claim Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+        $claims = Claim::orderBy('created_at', 'DESC')->with('visitor')->get();
+
+        return Excel::download(new TechnoClaimExport([
+            'claims' => $claims,
+        ]), $filename);
     }
     public function acceptTechnoClaim($id) {
         $data = TechnoClaim::where('id', $id);
