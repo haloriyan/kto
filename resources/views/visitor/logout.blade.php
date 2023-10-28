@@ -11,7 +11,7 @@
 <script>
     window.localStorage.clear();
     setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/visitor/login";
     }, 400);
 </script>
     
