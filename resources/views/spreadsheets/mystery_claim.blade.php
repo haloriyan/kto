@@ -14,7 +14,7 @@
         @php
             use Carbon\Carbon;
             $dayCounter = [];
-            $renderedEmail = [];
+            $renderedEmails = [];
         @endphp
         @foreach ($claims as $i => $item)
             @if (!in_array(Carbon::parse($item->created_at)->format('Y-m-d'), $dayCounter))
