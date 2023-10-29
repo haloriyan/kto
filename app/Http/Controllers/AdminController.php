@@ -364,7 +364,7 @@ class AdminController extends Controller
     public function claimExport() {
         $now = Carbon::now();
         $filename = "Mystery Gift Claim Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
-        $claims = Claim::orderBy('created_at', 'DESC')->with('visitor')->get();
+        $claims = Claim::orderBy('created_at', 'ASC')->with('visitor')->get();
 
         return Excel::download(new MysteryClaimExport([
             'claims' => $claims,
@@ -392,7 +392,7 @@ class AdminController extends Controller
     public function exclusiveClaimExport() {
         $now = Carbon::now();
         $filename = "Exclusive Gift Claim Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
-        $claims = ExclusiveClaim::orderBy('created_at', 'DESC')->with('visitor')->get();
+        $claims = ExclusiveClaim::orderBy('created_at', 'ASC')->with('visitor')->get();
 
         return Excel::download(new ExclusiveClaimExport([
             'claims' => $claims,
@@ -420,7 +420,7 @@ class AdminController extends Controller
     public function technoClaimExport() {
         $now = Carbon::now();
         $filename = "Techno Claim Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
-        $claims = Claim::orderBy('created_at', 'DESC')->with('visitor')->get();
+        $claims = Claim::orderBy('created_at', 'ASC')->with('visitor')->get();
 
         return Excel::download(new TechnoClaimExport([
             'claims' => $claims,

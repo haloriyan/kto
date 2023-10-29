@@ -11,7 +11,19 @@
         </tr>
     </thead>
     <tbody>
+        @php
+            use Carbon\Carbon;
+            $dayCounter = [];
+        @endphp
         @foreach ($claims as $i => $item)
+            @if (!in_array(Carbon::parse($item->created_at)->format('Y-m-d'), $dayCounter))
+                <tr>
+                    <th colspan="4" style="background-color: #dedede;text-align: center;">Day {{ count($dayCounter) + 1 }} - {{ Carbon::parse($item->created_at)->format('d M Y') }}</th>
+                </tr>
+                @php
+                    array_push($dayCounter, Carbon::parse($item->created_at)->format('Y-m-d'));
+                @endphp
+            @endif
             <tr>
                 <td>{{ $i + 1 }}</td>
                 <td>{{ $item->visitor->name }}</td>
