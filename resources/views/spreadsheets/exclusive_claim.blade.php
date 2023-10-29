@@ -4,14 +4,26 @@
             <th colspan="4" style="background-color: #dedede;text-align: center;"><span style="color: #fff;">Exclusive Gift Claim</span></th>
         </tr>
         <tr>
-            <th style="font-weight: bold;">Name</th>
+            <th style="font-weight: bold;">No</th>
             <th style="font-weight: bold;">Name</th>
             <th style="font-weight: bold;">Email</th>
             <th style="font-weight: bold;">Status</th>
         </tr>
     </thead>
     <tbody>
+        @php
+            use Carbon\Carbon;
+            $dayCounter = [];
+        @endphp
         @foreach ($claims as $i => $item)
+            @if (!in_array($item->created_at, $dayCounter))
+                <tr>
+                    <th colspan="4" style="background-color: #dedede;text-align: center;">Day {{ count($dayCounter) + 1 }} - {{ Carbon::parse($item->created_at)->format('d M Y') }}</th>
+                </tr>
+                @php
+                    array_push($dayCounter, $item->created_at);
+                @endphp
+            @endif
             <tr>
                 <td>{{ $i + 1 }}</td>
                 <td>{{ $item->visitor->name }}</td>
