@@ -96,10 +96,10 @@
         @if ($histories->count() == 0)
             <div class="text size-14 muted mt-05">Scan seller's QR to gets exclusive gift</div>
         @else
-            @if (6 - $histories->count() == 0)
+            @if (1 - $histories->count() == 0)
                 <div class="text size-14 muted mt-05">Claim your mystery gift now!</div>
             @else
-                <div class="text size-14 muted mt-05">Scan {{ 6 - $histories->count() }}x more to claim mystery gift</div>
+                <div class="text size-14 muted mt-05">Scan {{ 1 - $histories->count() }}x more to claim mystery gift</div>
             @endif
         @endif
     </div>
@@ -152,7 +152,7 @@
                     <div class="text bold size-18">Mystery Gift</div>
                     <div class="text size-12 muted">Scan at any sellers for 5 more times</div>
                 </div>
-                @if ($histories->count() >= 6 && $myData->mystery_claim == null)
+                @if ($histories->count() >= 1 && $myData->mystery_claim == null)
                     <a href="{{ route('visitor.claim') }}">
                         <button class="primary small">Claim</button>
                     </a>
