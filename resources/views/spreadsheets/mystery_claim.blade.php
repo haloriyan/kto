@@ -14,6 +14,7 @@
         @php
             use Carbon\Carbon;
             $dayCounter = [];
+            $renderedEmail = [];
         @endphp
         @foreach ($claims as $i => $item)
             @if (!in_array(Carbon::parse($item->created_at)->format('Y-m-d'), $dayCounter))
@@ -24,18 +25,23 @@
                     array_push($dayCounter, Carbon::parse($item->created_at)->format('Y-m-d'));
                 @endphp
             @endif
-            <tr>
-                <td>{{ $i + 1 }}</td>
-                <td>{{ $item->visitor->name }}</td>
-                <td>{{ $item->visitor->email }}</td>
-                <td>
-                    @if ($item->is_accepted)
-                        Accepted
-                    @else
-                        Not accepted yet
-                    @endif
-                </td>
-            </tr>
+            @if (!in_array($item->visitor->email, $renderedEmails))
+                <tr>
+                    <td>{{ $i + 1 }}</td>
+                    <td>{{ $item->visitor->name }}</td>
+                    <td>{{ $item->visitor->email }}</td>
+                    <td>
+                        @if ($item->is_accepted)
+                            Accepted
+                        @else
+                            Not accepted yet
+                        @endif
+                    </td>
+                </tr>
+                @php
+                    array_push($renderedEmails, $item->visitor->email);
+                @endphp
+            @endif
         @endforeach
     </tbody>
 </table>

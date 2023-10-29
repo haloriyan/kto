@@ -14,28 +14,34 @@
         @php
             use Carbon\Carbon;
             $dayCounter = [];
+            $renderedEmails = [];
         @endphp
-        @if (!in_array(Carbon::parse($item->created_at)->format('Y-m-d'), $dayCounter))
-            <tr>
-                <th colspan="4" style="background-color: #dedede;text-align: center;">Day {{ count($dayCounter) + 1 }} - {{ Carbon::parse($item->created_at)->format('d M Y') }}</th>
-            </tr>
-            @php
-                array_push($dayCounter, Carbon::parse($item->created_at)->format('Y-m-d'));
-            @endphp
-        @endif
         @foreach ($claims as $i => $item)
-            <tr>
-                <td>{{ $i + 1 }}</td>
-                <td>{{ $item->visitor->name }}</td>
-                <td>{{ $item->visitor->email }}</td>
-                <td>
-                    @if ($item->is_accepted)
-                        Accepted
-                    @else
-                        Not accepted yet
-                    @endif
-                </td>
-            </tr>
+            @if (!in_array(Carbon::parse($item->created_at)->format('Y-m-d'), $dayCounter))
+                <tr>
+                    <th colspan="4" style="background-color: #dedede;text-align: center;">Day {{ count($dayCounter) + 1 }} - {{ Carbon::parse($item->created_at)->format('d M Y') }}</th>
+                </tr>
+                @php
+                    array_push($dayCounter, Carbon::parse($item->created_at)->format('Y-m-d'));
+                @endphp
+            @endif
+            @if (!in_array($item->visitor->email, $renderedEmails))
+                <tr>
+                    <td>{{ $i + 1 }}</td>
+                    <td>{{ $item->visitor->name }}</td>
+                    <td>{{ $item->visitor->email }}</td>
+                    <td>
+                        @if ($item->is_accepted)
+                            Accepted
+                        @else
+                            Not accepted yet
+                        @endif
+                    </td>
+                </tr>
+                @php
+                    array_push($renderedEmails, $item->visitor->email);
+                @endphp
+            @endif
         @endforeach
     </tbody>
 </table>
