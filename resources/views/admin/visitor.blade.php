@@ -26,6 +26,12 @@
         </form>
     </div>
 
+    <div class="flex row item-center gap-20 justify-end mb-2 mt-2">
+        <a href="{{ route('admin.visitor.export') }}" class="flex justify-end">
+            <button class="green small">Download Excel</button>
+        </a>
+    </div>
+
     <table>
         <thead>
             <tr>

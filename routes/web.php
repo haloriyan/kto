@@ -88,9 +88,10 @@ Route::group(['prefix' => "admin"], function () {
         });
 
         Route::group(['prefix' => "visitor"], function () {
-            Route::get('/', "AdminController@visitor")->name('admin.visitor');
+            Route::get('export', "AdminController@visitorExport")->name('admin.visitor.export');
             Route::get('/{id}/detail', "AdminController@visitorDetail")->name('admin.visitor.detail');
             Route::get('/{id}/eligible', "VisitorController@appointmentEligible")->name('admin.visitor.eligible');
+            Route::get('/', "AdminController@visitor")->name('admin.visitor');
         });
 
         Route::group(['prefix' => "seller"], function () {

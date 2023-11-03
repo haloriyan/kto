@@ -10,6 +10,7 @@ use App\Exports\KMTMUser as ExportsKMTMUser;
 use App\Exports\KMTMUserB2C;
 use App\Exports\MysteryClaimExport;
 use App\Exports\TechnoClaimExport;
+use App\Exports\VisitorExport;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Claim;
@@ -128,6 +129,23 @@ class AdminController extends Controller
             'request' => $request,
             'total_visitor' => $totalVisitors,
         ]);
+    }
+    public function visitorExport() {
+        $now = Carbon::now();
+        $visitors = Visitor::orderBy('created_at', 'DESC')->with(['visits.seller'])->get();
+        $filename = "KMTE Visitors - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+
+        foreach ($visitors as $i => $visitor) {
+            $sellerVisits = [];
+            foreach ($visitor->visits as $visit) {
+                array_push($sellerVisits, $visit->seller->name);
+            }
+            $visitors[$i]['seller_visits'] = $sellerVisits;
+        }
+
+        return Excel::download(new VisitorExport([
+            'visitors' => $visitors
+        ]), $filename);
     }
     public function visitorDetail($id, Request $request) {
         $myData = self::me();
