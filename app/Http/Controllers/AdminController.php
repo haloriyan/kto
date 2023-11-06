@@ -9,6 +9,7 @@ use App\Exports\KmteUserExport;
 use App\Exports\KMTMUser as ExportsKMTMUser;
 use App\Exports\KMTMUserB2C;
 use App\Exports\MysteryClaimExport;
+use App\Exports\SellerVisittingExport;
 use App\Exports\TechnoClaimExport;
 use App\Exports\VisitorExport;
 use App\Models\Admin;
@@ -186,6 +187,17 @@ class AdminController extends Controller
             'request' => $request,
             'visits' => $visits,
         ]);
+    }
+    public function visittingExport($sellerID) {
+        $now = Carbon::now();
+        $filename = "KMTM Appointments - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
+        $seller = Seller::where('id', $sellerID)->first();
+        $scans = Scan::where('seller_id', $sellerID)->with(['visitor'])->get();
+
+        return Excel::download(new SellerVisittingExport([
+            'scans' => $scans,
+            'seller' => $seller
+        ]), $filename);
     }
     public function schedule() {
         $myData = self::me();

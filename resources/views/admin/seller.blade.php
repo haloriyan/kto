@@ -37,10 +37,14 @@
                 </div>
             </div>
 
-            <div class="absolute top-0 right-0 m-05 hover-to-show">
-                <a href="{{ route('seller.qr', $seller->id) }}" class="bg-blue p-05 pl-2 pr-2 rounded flex row item-center gap-10 pointer">
+            <div class="absolute top-0 right-0 m-05 hover-to-show flex row item-center gap-10">
+                <a href="{{ route('seller.qr', $seller->id) }}" class="bg-blue p-05 pl-2 pr-2 rounded flex row item-center gap-10 pointer text size-12">
                     <i class="bx bx-qr"></i>
                     QR
+                </a>
+                <a href="{{ route('admin.visitting.export', $seller->id) }}" class="bg-green p-05 pl-2 pr-2 rounded flex row item-center gap-10 pointer text size-12">
+                    <i class="bx bx-qr"></i>
+                    Scan Report
                 </a>
             </div>
         </div>

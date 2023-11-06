@@ -65,6 +65,7 @@ Route::group(['prefix' => "admin"], function () {
         Route::get('settings', "AdminController@settings")->name('admin.settings');
         Route::post('settings/update', "AdminController@updateSettings")->name('admin.updateSettings');
         Route::get('visitting', "AdminController@visitting")->name('admin.visitting');
+        Route::get('visitting/export/{sellerID}', "AdminController@visittingExport")->name('admin.visitting.export');
         Route::get('appointment', 'AdminController@appointment')->name('admin.appointment');
         Route::get('appointment/export', 'AdminController@appointmentExport')->name('admin.appointment.export');
 
