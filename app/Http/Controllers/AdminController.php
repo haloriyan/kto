@@ -190,8 +190,8 @@ class AdminController extends Controller
     }
     public function visittingExport($sellerID) {
         $now = Carbon::now();
-        $filename = "KMTM Appointments - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
         $seller = Seller::where('id', $sellerID)->first();
+        $filename = $seller->name." Scan Report - Exported on " . $now->format('d M Y_H:i:s') . '.xlsx';
         $scans = Scan::where('seller_id', $sellerID)->with(['visitor'])->get();
 
         return Excel::download(new SellerVisittingExport([
